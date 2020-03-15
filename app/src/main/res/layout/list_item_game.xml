@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="game" type="mahoroba.uruhashi.usecase.query.GameSummaryDto"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{game.formatDate}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textStadium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@{game.stadiumAbbreviatedName}"
+            app:layout_constraintStart_toEndOf="@id/textDate"
+            app:layout_constraintBaseline_toBaselineOf="@id/textDate"
+        />
+
+        <TextView
+            android:id="@+id/textHomeTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@{game.homeTeamAbbreviatedName}"
+            app:layout_constraintTop_toBottomOf="@id/textDate"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textVisitorTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@{game.visitorTeamAbbreviatedName}"
+            app:layout_constraintStart_toEndOf="@id/textHomeTeam"
+            app:layout_constraintBaseline_toBaselineOf="@id/textHomeTeam"
+        />
+
+        <View
+            android:id="@+id/border"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorBorder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

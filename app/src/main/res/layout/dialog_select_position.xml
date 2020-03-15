@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.dialog.SelectPositionDialogViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonCenterFielder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_center_fielder"
+            android:onClick="@{vm::onCenterFielderSelected}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonLeftFielder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_left_fielder"
+            android:onClick="@{vm::onLeftFielderSelected}"
+            app:layout_constraintTop_toTopOf="@id/buttonCenterFielder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonCenterFielder"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonRightFielder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_right_fielder"
+            android:onClick="@{vm::onRightFielderSelected}"
+            app:layout_constraintTop_toTopOf="@id/buttonCenterFielder"
+            app:layout_constraintStart_toEndOf="@id/buttonCenterFielder"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonShortstop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_shortstop"
+            android:onClick="@{vm::onShortstopSelected}"
+            app:layout_constraintTop_toBottomOf="@id/buttonLeftFielder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/buttonCenterFielder"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonSecondBaseman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_second_baseman"
+            android:onClick="@{vm::onSecondBasemanSelected}"
+            app:layout_constraintTop_toBottomOf="@id/buttonRightFielder"
+            app:layout_constraintStart_toStartOf="@id/buttonCenterFielder"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonThirdBaseman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@string/select_position_third_baseman"
+            android:onClick="@{vm::onThirdBasemanSelected}"
+            app:layout_constraintTop_toBottomOf="@id/buttonShortstop"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonFirstBaseman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/select_position_first_baseman"
+            android:onClick="@{vm::onFirstBasemanSelected}"
+            app:layout_constraintTop_toBottomOf="@id/buttonSecondBaseman"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonPitcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_position_pitcher"
+            android:enabled="@{!vm.enableDH}"
+            android:onClick="@{vm::onPitcherSelected}"
+            app:layout_constraintTop_toTopOf="@id/buttonThirdBaseman"
+            app:layout_constraintStart_toEndOf="@id/buttonThirdBaseman"
+            app:layout_constraintEnd_toStartOf="@id/buttonFirstBaseman"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonCatcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_catcher"
+            android:onClick="@{vm::onCatcherSelected}"
+            app:layout_constraintTop_toBottomOf="@id/buttonPitcher"
+            app:layout_constraintStart_toStartOf="@id/buttonPitcher"
+            app:layout_constraintEnd_toEndOf="@id/buttonPitcher"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonDesignatedHitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_position_designated_hitter"
+            android:enabled="@{vm.enableDH}"
+            android:onClick="@{vm::onDesignatedHitterSelected}"
+            app:layout_constraintTop_toTopOf="@id/buttonCatcher"
+            app:layout_constraintStart_toEndOf="@id/buttonCatcher"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

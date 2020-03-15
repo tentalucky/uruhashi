@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ScoreBoardFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.ScoreBoardViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <mahoroba.uruhashi.presentation.customView.ScoreBoardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:boxScore="@{vm.boxScore}"
+            app:gameBaseInfo="@{vm.gameBaseInfo}"
+            app:gameState="@{vm.gameState}"
+            app:playersBattingStats="@{vm.playersBattingStats}"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="@{vm::backCommand}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

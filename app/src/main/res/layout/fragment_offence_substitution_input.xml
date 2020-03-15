@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.OffenceSubstitutionInputFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.OffenceSubstitutionInputViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:background="@color/colorWhitish">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/batterCaption"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_batter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+            android:id="@+id/textPresentBatterName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@{vm.presentBatterName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/batterCaption"
+            app:layout_constraintEnd_toEndOf="@id/textPinchHitterName"
+            app:layout_constraintStart_toEndOf="@id/batterCaption" />
+
+                <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/pinchHitterCaption"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_pinch_hitter"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchHitterButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clearPinchHitterButton" />
+
+        <mahoroba.uruhashi.presentation.customView.SelectButton
+            android:id="@+id/textPinchHitterName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:elevation="4dp"
+            android:onClick="@{vm::onSelectingPinchHitterClicked}"
+            android:textColor="@color/colorWhitish"
+            android:text="@{vm.pinchHitterName}"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchHitterButton"
+            app:layout_constraintEnd_toStartOf="@id/clearPinchHitterButton"
+            app:layout_constraintStart_toEndOf="@id/pinchHitterCaption"
+            app:layout_constraintTop_toTopOf="@id/clearPinchHitterButton" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/clearPinchHitterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClearPinchHitterClicked}"
+            android:src="@drawable/ic_clear_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPresentBatterName" />
+
+        <View
+            android:id="@+id/borderBottomOfPinchHitter"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clearPinchHitterButton" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/firstRunnerCaption"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_first_runner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/borderBottomOfPinchHitter" />
+
+        <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+            android:id="@+id/textPresentFirstRunnerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@{vm.presentFirstRunnerName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/firstRunnerCaption"
+            app:layout_constraintEnd_toEndOf="@id/textPinchRunner1Name"
+            app:layout_constraintStart_toEndOf="@id/firstRunnerCaption" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/pinchRunner1Caption"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_pinch_runner"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner1Button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner1Button" />
+
+        <mahoroba.uruhashi.presentation.customView.SelectButton
+            android:id="@+id/textPinchRunner1Name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:enabled="@{vm.pinchRunner1Enable}"
+            android:gravity="center_vertical"
+            android:elevation="4dp"
+            android:onClick="@{vm::onSelectingPinchRunner1Clicked}"
+            android:textColor="@color/colorWhitish"
+            android:text="@{vm.pinchRunner1Name}"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner1Button"
+            app:layout_constraintEnd_toStartOf="@id/clearPinchRunner1Button"
+            app:layout_constraintStart_toEndOf="@id/pinchRunner1Caption"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner1Button" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/clearPinchRunner1Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClearPinchRunner1Clicked}"
+            android:src="@drawable/ic_clear_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPresentFirstRunnerName" />
+
+        <View
+            android:id="@+id/borderBottomOfPinchRunner1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clearPinchRunner1Button" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/secondRunnerCaption"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_second_runner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/borderBottomOfPinchRunner1" />
+
+        <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+            android:id="@+id/textPresentSecondRunnerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@{vm.presentSecondRunnerName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/secondRunnerCaption"
+            app:layout_constraintEnd_toEndOf="@id/textPinchRunner2Name"
+            app:layout_constraintStart_toEndOf="@id/secondRunnerCaption" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/pinchRunner2Caption"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_pinch_runner"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner2Button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner2Button" />
+
+        <mahoroba.uruhashi.presentation.customView.SelectButton
+            android:id="@+id/textPinchRunner2Name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:enabled="@{vm.pinchRunner2Enable}"
+            android:gravity="center_vertical"
+            android:elevation="4dp"
+            android:onClick="@{vm::onSelectingPinchRunner2Clicked}"
+            android:textColor="@color/colorWhitish"
+            android:text="@{vm.pinchRunner2Name}"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner2Button"
+            app:layout_constraintEnd_toStartOf="@id/clearPinchRunner2Button"
+            app:layout_constraintStart_toEndOf="@id/pinchRunner2Caption"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner2Button" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/clearPinchRunner2Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClearPinchRunner2Clicked}"
+            android:src="@drawable/ic_clear_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPresentSecondRunnerName" />
+
+        <View
+            android:id="@+id/borderBottomOfPinchRunner2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clearPinchRunner2Button" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/thirdRunnerCaption"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_third_runner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/borderBottomOfPinchRunner2" />
+
+        <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+            android:id="@+id/textPresentThirdRunnerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMain"
+            android:text="@{vm.presentThirdRunnerName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/thirdRunnerCaption"
+            app:layout_constraintEnd_toEndOf="@id/textPinchRunner3Name"
+            app:layout_constraintStart_toEndOf="@id/thirdRunnerCaption" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/pinchRunner3Caption"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorMain"
+            android:text="@string/caption_pinch_runner"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner3Button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner3Button" />
+
+        <mahoroba.uruhashi.presentation.customView.SelectButton
+            android:id="@+id/textPinchRunner3Name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:enabled="@{vm.pinchRunner3Enable}"
+            android:gravity="center_vertical"
+            android:elevation="4dp"
+            android:onClick="@{vm::onSelectingPinchRunner3Clicked}"
+            android:textColor="@color/colorWhitish"
+            android:text="@{vm.pinchRunner3Name}"
+            app:layout_constraintBottom_toBottomOf="@id/clearPinchRunner3Button"
+            app:layout_constraintEnd_toStartOf="@id/clearPinchRunner3Button"
+            app:layout_constraintStart_toEndOf="@id/pinchRunner3Caption"
+            app:layout_constraintTop_toTopOf="@id/clearPinchRunner3Button" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/clearPinchRunner3Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClearPinchRunner3Clicked}"
+            android:src="@drawable/ic_clear_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPresentThirdRunnerName" />
+
+        <View
+            android:id="@+id/borderBottomOfPinchRunner3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clearPinchRunner3Button" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::backCommand}"
+            android:text="@string/caption_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/commitButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/commitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{vm.commitEnable}"
+            android:onClick="@{vm::commitCommand}"
+            android:text="@string/caption_commit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/backButton" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

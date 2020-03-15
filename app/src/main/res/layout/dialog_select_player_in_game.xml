@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.dialog.SelectPlayerInGameDialogViewModel"/>
+    </data>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        >
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textTeamCaption"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="@string/team"
+                    app:layout_constraintTop_toTopOf="@id/listTeam"
+                    app:layout_constraintBottom_toBottomOf="@id/listTeam"
+                    app:layout_constraintStart_toStartOf="parent"
+                />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/listTeam"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:entries="@{vm.teamList}"
+                    android:selectedItemPosition="@={vm.selectedTeamPosition}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textTeamCaption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                />
+
+                <TextView
+                    android:id="@+id/textUniformNumberCaption"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="@string/uniform_number"
+                    app:layout_constraintTop_toTopOf="@id/textSearchUniformNumber"
+                    app:layout_constraintBottom_toBottomOf="@id/textSearchUniformNumber"
+                    app:layout_constraintStart_toStartOf="parent"
+                />
+
+                <EditText
+                    android:id="@+id/textSearchUniformNumber"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:inputType="numberDecimal"
+                    android:text="@={vm.searchUniformNumber}"
+                    app:layout_constraintTop_toBottomOf="@id/textTeamCaption"
+                    app:layout_constraintStart_toEndOf="@id/textUniformNumberCaption"
+                />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/playerListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</layout>

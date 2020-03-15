@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_game"
+        android:title="@string/game"/>
+
+    <item
+        android:id="@+id/menu_team"
+        android:title="@string/team"/>
+
+    <item
+        android:id="@+id/menu_player"
+        android:title="@string/player"/>
+
+    <item
+        android:id="@+id/menu_stadium"
+        android:title="@string/stadium"/>
+
+</menu>

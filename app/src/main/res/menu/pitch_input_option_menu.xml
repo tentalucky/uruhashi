@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/offenceTeamSubstitution"
+        android:title="@string/option_offence_substitution" />
+
+    <item
+        android:id="@+id/defenceTeamSubstitution"
+        android:title="@string/option_defence_substitution" />
+
+    <item
+        android:id="@+id/easyReference"
+        android:title="簡易照会" />
+
+</menu>

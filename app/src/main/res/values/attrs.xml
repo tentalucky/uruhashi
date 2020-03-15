@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PitchLocationView">
+        <attr name="strike_zone_line_color" format="color|reference"/>
+        <attr name="effective_area_background" format="color|reference"/>
+        <attr name="effective_area_border_color" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="BattingOptionSelectingView">
+        <attr name="orientation" format="enum">
+            <enum name="vertical" value="0"/>
+            <enum name="horizontal" value="1"/>
+        </attr>
+    </declare-styleable>
+    
+    <declare-styleable name="RunnerProgressInputView">
+        <attr name="default_base" format="integer"/>
+    </declare-styleable>
+</resources>

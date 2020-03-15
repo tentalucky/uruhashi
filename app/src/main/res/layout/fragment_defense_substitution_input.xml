@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.DefenseSubstitutionInputFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.DefenseSubstitutionInputViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhitish">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order1Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder1PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition1}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order1Caption"
+                    app:layout_constraintStart_toEndOf="@id/order1Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder1PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName1}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order1Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder1NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder1PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder1NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition1}"
+                    android:text="@{vm.newPosition1Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder1Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder1PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder1Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder1NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer1}"
+                    android:text="@{vm.newPlayer1Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder1Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder1Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder1PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder1Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder1Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder1}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder1PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder1Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order2Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder1" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder2PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition2}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order2Caption"
+                    app:layout_constraintStart_toEndOf="@id/order2Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder2PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName2}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order2Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder2NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder2PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder2NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition2}"
+                    android:text="@{vm.newPosition2Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder2Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder2PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder2Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder2NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer2}"
+                    android:text="@{vm.newPlayer2Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder2Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder2Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder2PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder2Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder2Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder2}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder2PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder2Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order3Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder2" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder3PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition3}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order3Caption"
+                    app:layout_constraintStart_toEndOf="@id/order3Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder3PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName3}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order3Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder3NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder3PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder3NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition3}"
+                    android:text="@{vm.newPosition3Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder3Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder3PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder3Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder3NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer3}"
+                    android:text="@{vm.newPlayer3Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder3Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder3Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder3PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder3Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder3Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder3}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder3PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder3Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order4Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder3" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder4PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition4}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order4Caption"
+                    app:layout_constraintStart_toEndOf="@id/order4Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder4PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName4}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order4Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder4NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder4PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder4NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition4}"
+                    android:text="@{vm.newPosition4Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder4Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder4PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder4Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder4NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer4}"
+                    android:text="@{vm.newPlayer4Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder4Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder4Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder4PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder4Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder4Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder4}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder4PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder4"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder4Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order5Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder4" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder5PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition5}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order5Caption"
+                    app:layout_constraintStart_toEndOf="@id/order5Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder5PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName5}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order5Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder5NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder5PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder5NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition5}"
+                    android:text="@{vm.newPosition5Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder5Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder5PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder5Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder5NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer5}"
+                    android:text="@{vm.newPlayer5Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder5Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder5Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder5PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder5Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder5Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder5}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder5PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder5"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder5Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order6Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder5" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder6PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition6}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order6Caption"
+                    app:layout_constraintStart_toEndOf="@id/order6Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder6PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName6}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order6Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder6NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder6PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder6NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition6}"
+                    android:text="@{vm.newPosition6Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder6Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder6PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder6Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder6NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer6}"
+                    android:text="@{vm.newPlayer6Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder6Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder6Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder6PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder6Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder6Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder6}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder6PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder6"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder6Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order7Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_7"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder6" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder7PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition7}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order7Caption"
+                    app:layout_constraintStart_toEndOf="@id/order7Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder7PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName7}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order7Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder7NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder7PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder7NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition7}"
+                    android:text="@{vm.newPosition7Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder7Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder7PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder7Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder7NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer7}"
+                    android:text="@{vm.newPlayer7Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder7Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder7Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder7PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder7Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder7Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder7}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder7PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder7"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder7Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order8Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder7" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder8PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition8}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order8Caption"
+                    app:layout_constraintStart_toEndOf="@id/order8Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder8PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName8}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order8Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder8NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder8PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder8NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition8}"
+                    android:text="@{vm.newPosition8Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder8Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder8PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder8Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder8NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer8}"
+                    android:text="@{vm.newPlayer8Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder8Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder8Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder8PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder8Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder8Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder8}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder8PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder8"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder8Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/order9Caption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder8" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder9PresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPosition9}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order9Caption"
+                    app:layout_constraintStart_toEndOf="@id/order9Caption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrder9PresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerName9}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/order9Caption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrder9NewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrder9PresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder9NewPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:onClick="@{vm::onSelectingPosition9}"
+                    android:text="@{vm.newPosition9Text}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder9Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder9PresentPosition"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder9Button" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrder9NewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayer9}"
+                    android:text="@{vm.newPlayer9Name}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrder9Button"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrder9Button"
+                    app:layout_constraintStart_toStartOf="@id/textOrder9PresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrder9Button" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrder9Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrder9}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrder9PresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrder9"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrder9Button" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/orderPCaption"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_P"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/borderBottomOfOrder9" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrderPPresentPosition"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:text="@string/lineup_caption_P"
+                    app:layout_constraintBaseline_toBaselineOf="@id/orderPCaption"
+                    app:layout_constraintStart_toEndOf="@id/orderPCaption" />
+
+                <mahoroba.uruhashi.presentation.customView.TextShrinkTextView
+                    android:id="@+id/textOrderPPresentPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMain"
+                    android:text="@{vm.presentPlayerNameP}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/orderPCaption"
+                    app:layout_constraintEnd_toEndOf="@id/textOrderPNewPlayerName"
+                    app:layout_constraintStart_toEndOf="@id/textOrderPPresentPosition" />
+
+                <mahoroba.uruhashi.presentation.customView.SelectButton
+                    android:id="@+id/textOrderPNewPlayerName"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{vm::onSelectingPlayerP}"
+                    android:text="@{vm.newPlayerPName}"
+                    app:layout_constraintBottom_toBottomOf="@id/clearOrderPButton"
+                    app:layout_constraintEnd_toStartOf="@id/clearOrderPButton"
+                    app:layout_constraintStart_toStartOf="@id/textOrderPPresentPlayerName"
+                    app:layout_constraintTop_toTopOf="@id/clearOrderPButton" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/clearOrderPButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{vm::onClearingOrderP}"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textOrderPPresentPlayerName" />
+
+                <View
+                    android:id="@+id/borderBottomOfOrderP"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBorder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clearOrderPButton" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::backCommand}"
+            android:text="@string/caption_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/commitButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/commitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{vm.commitEnable}"
+            android:onClick="@{vm::commitCommand}"
+            android:text="@string/caption_commit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/backButton" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

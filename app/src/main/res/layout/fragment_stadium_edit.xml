@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.StadiumEditViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.StadiumEditFragment">
+
+        <TextView
+            android:id="@+id/textIdCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="ID:"
+            android:layout_marginStart="@dimen/default_margin"
+            app:layout_constraintBaseline_toBaselineOf="@id/textIdValue"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textIdValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.id}"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textIdCaption"
+        />
+
+        <TextView
+            android:id="@+id/textNameCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stadium_name"
+            app:layout_constraintBaseline_toBaselineOf="@id/textNameValue"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+        />
+
+        <EditText
+            android:id="@+id/textNameValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="@string/stadium_name"
+            android:hint="@string/stadium_name"
+            android:text="@={vm.name}"
+            android:enabled="@{vm.isLoaded}"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/textIdValue"
+            app:layout_constraintStart_toEndOf="@id/textNameCaption"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textAbbreviatedNameCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/stadium_abbreviation"
+            app:layout_constraintBaseline_toBaselineOf="@id/textAbbreviatedNameValue"
+            app:layout_constraintStart_toStartOf="@id/textNameCaption"
+        />
+
+        <EditText
+            android:id="@+id/textAbbreviatedNameValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="@string/stadium_abbreviation"
+            android:hint="@string/stadium_abbreviation"
+            android:text="@={vm.abbreviatedName}"
+            android:enabled="@{vm.isLoaded}"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/textNameValue"
+            app:layout_constraintStart_toStartOf="@id/textNameValue"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPriorityCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stadium_priority"
+            app:layout_constraintTop_toTopOf="@id/ratePriorityValue"
+            app:layout_constraintBottom_toBottomOf="@id/ratePriorityValue"
+            app:layout_constraintStart_toStartOf="@id/textAbbreviatedNameCaption"
+        />
+
+        <RatingBar
+            android:id="@+id/ratePriorityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="@={vm.priority}"
+            android:stepSize="1"
+            app:layout_constraintTop_toBottomOf="@id/textAbbreviatedNameValue"
+            app:layout_constraintStart_toStartOf="@id/textNameValue"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:onClick="@{vm::onRegisterButtonClicked}"
+            app:layout_constraintTop_toBottomOf="@id/ratePriorityValue"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

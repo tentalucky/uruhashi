@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.StartingLineupEditFragment">
+
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.GameInfoInputViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@{vm.lineupEditing.teamName}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DH"
+            android:checked="@{vm.lineupEditing.hasDH}"
+            android:onCheckedChanged="@{vm::onHasDHCheckedChanged}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption1"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_1"
+            app:layout_constraintTop_toBottomOf="@id/textTeamName"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position1}"
+            android:onClick="@{vm::onSetPosition1Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption1"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer1"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player1Name}"
+            android:onClick="@{vm::onSetPlayer1Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+            app:layout_constraintStart_toEndOf="@id/textPosition1"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption2"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_2"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption1"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position2}"
+            android:onClick="@{vm::onSetPosition2Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption2"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer2"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player2Name}"
+            android:onClick="@{vm::onSetPlayer2Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+            app:layout_constraintStart_toEndOf="@id/textPosition2"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption3"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_3"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption2"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position3}"
+            android:onClick="@{vm::onSetPosition3Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption3"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer3"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player3Name}"
+            android:onClick="@{vm::onSetPlayer3Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+            app:layout_constraintStart_toEndOf="@id/textPosition3"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption4"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_4"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption3"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position4}"
+            android:onClick="@{vm::onSetPosition4Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption4"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer4"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player4Name}"
+            android:onClick="@{vm::onSetPlayer4Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+            app:layout_constraintStart_toEndOf="@id/textPosition4"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption5"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_5"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption4"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position5}"
+            android:onClick="@{vm::onSetPosition5Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption5"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer5"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player5Name}"
+            android:onClick="@{vm::onSetPlayer5Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+            app:layout_constraintStart_toEndOf="@id/textPosition5"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption6"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_6"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption5"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition6"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position6}"
+            android:onClick="@{vm::onSetPosition6Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption6"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer6"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player6Name}"
+            android:onClick="@{vm::onSetPlayer6Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+            app:layout_constraintStart_toEndOf="@id/textPosition6"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption7"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_7"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption6"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition7"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position7}"
+            android:onClick="@{vm::onSetPosition7Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption7"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer7"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player7Name}"
+            android:onClick="@{vm::onSetPlayer7Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+            app:layout_constraintStart_toEndOf="@id/textPosition7"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption8"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_8"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption7"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition8"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position8}"
+            android:onClick="@{vm::onSetPosition8Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption8"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer8"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player8Name}"
+            android:onClick="@{vm::onSetPlayer8Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+            app:layout_constraintStart_toEndOf="@id/textPosition8"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaption9"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_9"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption8"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPosition9"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:hint="POS"
+            android:text="@{vm.lineupEditing.position9}"
+            android:onClick="@{vm::onSetPosition9Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+            app:layout_constraintStart_toEndOf="@id/textOrderCaption9"
+        />
+
+        <TextView
+            android:id="@+id/textPlayer9"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.player9Name}"
+            android:onClick="@{vm::onSetPlayer9Clicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+            app:layout_constraintStart_toEndOf="@id/textPosition9"
+        />
+
+        <TextView
+            android:id="@+id/textOrderCaptionP"
+            android:layout_width="20dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:gravity="center"
+            android:text="@string/lineup_caption_P"
+            android:enabled="@{vm.lineupEditing.hasDH}"
+            app:layout_constraintTop_toBottomOf="@id/textOrderCaption9"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textPlayerP"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:gravity="center_vertical|start"
+            android:hint="PLAYER"
+            android:text="@{vm.lineupEditing.playerPName}"
+            android:enabled="@{vm.lineupEditing.hasDH}"
+            android:onClick="@{vm::onSetPlayerPClicked}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaptionP"
+            app:layout_constraintStart_toStartOf="@id/textPlayer1"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

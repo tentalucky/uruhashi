@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="play"
+            type="mahoroba.uruhashi.presentation.FieldPlayInputViewModel.FieldPlaySet" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/fieldPlayFactorText"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{play.fieldPlayFactorText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="@{play.fieldPlayListText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/batterRunnerStatus"
+            app:layout_constraintStart_toEndOf="@id/fieldPlayFactorText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/batterRunnerStatus"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{play.batterRunnerStatusText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/firstRunnerStatus"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/firstRunnerStatus"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{play.firstRunnerStatusText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/secondRunnerStatus"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/secondRunnerStatus"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{play.secondRunnerStatusText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/thirdRunnerStatus"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/thirdRunnerStatus"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{play.thirdRunnerStatusText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.FieldPlayInputFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.FieldPlayInputViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <mahoroba.uruhashi.presentation.customView.FieldPlayFactorSelectingView
+            android:id="@+id/fieldPlayFactorSelectingView"
+            android:layout_width="0dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toTopOf="@id/fielderSelectingView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:selected_value="@={vm.fieldPlayFactor}"
+            app:fixedFieldPlayFactor="@{vm.fixedFieldPlayFactor}"/>
+
+        <mahoroba.uruhashi.presentation.customView.FielderSelectingView
+            android:id="@+id/fielderSelectingView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{vm::onFielderSelected}"
+            app:layout_constraintBottom_toTopOf="@id/ballRelayText"
+            app:layout_constraintEnd_toStartOf="@id/buttonErrorThrowing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/secondRunnerProgressView" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonErrorThrowing"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:onClick="@{vm::onErrorThrowingClicked}"
+            android:text="E-"
+            android:textColor="@android:color/holo_red_dark"
+            app:layout_constraintBottom_toTopOf="@id/buttonErrorCatching"
+            app:layout_constraintEnd_toStartOf="@id/secondRunnerProgressView"
+            app:layout_constraintStart_toEndOf="@id/fielderSelectingView"
+            app:layout_constraintTop_toTopOf="@id/fielderSelectingView" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonErrorCatching"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{vm::onErrorCatchingClicked}"
+            android:text="-E"
+            android:textColor="@android:color/holo_red_dark"
+            app:layout_constraintBottom_toTopOf="@id/buttonFieldersChoice"
+            app:layout_constraintEnd_toEndOf="@id/buttonErrorThrowing"
+            app:layout_constraintStart_toStartOf="@id/buttonErrorThrowing"
+            app:layout_constraintTop_toBottomOf="@id/buttonErrorThrowing" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonFieldersChoice"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{vm::onFieldersChoiceClicked}"
+            android:text="Fc"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_dark"
+            app:layout_constraintBottom_toTopOf="@id/buttonTaggedOut"
+            app:layout_constraintEnd_toEndOf="@id/buttonErrorThrowing"
+            app:layout_constraintStart_toStartOf="@id/buttonErrorThrowing"
+            app:layout_constraintTop_toBottomOf="@id/buttonErrorCatching" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonTaggedOut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{vm::onTaggedOutClicked}"
+            android:text="TO"
+            app:layout_constraintBottom_toBottomOf="@id/fielderSelectingView"
+            app:layout_constraintEnd_toEndOf="@id/buttonErrorThrowing"
+            app:layout_constraintStart_toStartOf="@id/buttonErrorThrowing"
+            app:layout_constraintTop_toBottomOf="@id/buttonFieldersChoice" />
+
+        <mahoroba.uruhashi.presentation.customView.RunnerProgressInputView
+            android:id="@+id/thirdRunnerProgressView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:enabled="@{vm.is3ROnBase}"
+            app:default_base="3"
+            app:latest_status="@{vm.thirdRunnerLatestStatus}"
+            app:layout_constraintEnd_toEndOf="@id/secondRunnerProgressView"
+            app:layout_constraintTop_toBottomOf="@id/secondRunnerProgressView"
+            app:movement="@={vm.thirdRunnerMovement}"
+            app:onMovementChanged="@{vm.onThirdRunnerMovementChanged}" />
+
+        <mahoroba.uruhashi.presentation.customView.RunnerProgressInputView
+            android:id="@+id/secondRunnerProgressView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:enabled="@{vm.is2ROnBase}"
+            app:default_base="2"
+            app:latest_status="@{vm.secondRunnerLatestStatus}"
+            app:layout_constraintBottom_toBottomOf="@id/firstRunnerProgressView"
+            app:layout_constraintEnd_toStartOf="@id/firstRunnerProgressView"
+            app:movement="@={vm.secondRunnerMovement}"
+            app:onMovementChanged="@{vm.onSecondRunnerMovementChanged}" />
+
+        <mahoroba.uruhashi.presentation.customView.RunnerProgressInputView
+            android:id="@+id/firstRunnerProgressView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:enabled="@{vm.is1ROnBase}"
+            app:default_base="1"
+            app:latest_status="@{vm.firstRunnerLatestStatus}"
+            app:layout_constraintBottom_toTopOf="@id/batterRunnerProgressView"
+            app:layout_constraintEnd_toEndOf="@id/batterRunnerProgressView"
+            app:movement="@={vm.firstRunnerMovement}"
+            app:onMovementChanged="@{vm.onFirstRunnerMovementChanged}" />
+
+        <mahoroba.uruhashi.presentation.customView.RunnerProgressInputView
+            android:id="@+id/batterRunnerProgressView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:enabled="@{vm.BRActive}"
+            app:default_base="0"
+            app:latest_status="@{vm.batterRunnerLatestStatus}"
+            app:layout_constraintBottom_toTopOf="@id/ballRelayText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:movement="@={vm.batterRunnerMovement}"
+            app:onMovementChanged="@{vm.onBatterRunnerMovementChanged}" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/ballRelayText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="@{vm.ballRelay}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/playHistoryView"
+            app:layout_constraintEnd_toStartOf="@id/backSpaceButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/backSpaceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onBackSpaceClicked}"
+            android:src="@drawable/ic_backspace_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/ballRelayText"
+            app:layout_constraintEnd_toStartOf="@id/clearButton"
+            app:layout_constraintTop_toTopOf="@id/ballRelayText" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClearClicked}"
+            android:src="@drawable/ic_clear_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/ballRelayText"
+            app:layout_constraintEnd_toStartOf="@id/addPlayButton"
+            app:layout_constraintTop_toTopOf="@id/ballRelayText" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/addPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="@{vm.inputIsValid}"
+            android:onClick="@{vm::onAddPlayClicked}"
+            android:src="@drawable/ic_add_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/ballRelayText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ballRelayText" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/playHistoryView"
+            android:layout_width="0dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toTopOf="@id/commitButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/historyBackButton"
+            tools:listitem="@layout/list_item_field_play"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/historyBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onBackOneHistoryClicked}"
+            android:src="@drawable/ic_arrow_upward_black_24dp"
+            app:layout_constraintTop_toTopOf="@id/playHistoryView"
+            app:layout_constraintStart_toEndOf="@id/playHistoryView"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/caption_back"
+            android:onClick="@{vm::onBackButtonClicked}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/commitButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/commitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/caption_commit"
+            android:enabled="@{vm.inputIsValid}"
+            android:onClick="@{vm::onCommitButtonClicked}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/backButton" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,211 @@
+<resources>
+    <string name="app_name">uruhashi</string>
+
+    <string name="game">試合</string>
+    <string name="team">チーム</string>
+    <string name="player">選手</string>
+    <string name="stadium">球場</string>
+    <string name="uniform_number">背番号</string>
+
+    <string name="register">登録</string>
+    <string name="create">新規</string>
+    <string name="edit">編集</string>
+    <string name="delete">削除</string>
+    <string name="select">選択</string>
+    <string name="input">入力</string>
+    <string name="export">外部出力</string>
+
+    <string name="team_name">チーム名</string>
+    <string name="team_abbreviation">略称</string>
+    <string name="team_priority">優先度</string>
+    <string name="team_member">所属選手</string>
+
+    <string name="player_family_name">姓</string>
+    <string name="player_first_name">名</string>
+    <string name="player_throw_hand">投</string>
+    <string name="player_bat_hand">打</string>
+    <string name="player_name_type">名前の表示</string>
+    <string name="player_belonging_to">所属先</string>
+
+    <string name="stadium_name">球場名</string>
+    <string name="stadium_abbreviation">略称</string>
+    <string name="stadium_priority">優先度</string>
+
+    <string name="edit_member_status_added">追加</string>
+    <string name="edit_member_status_removing">削除</string>
+    <string name="edit_member_status_default"></string>
+
+    <string name="game_info_game_name">試合名</string>
+    <string name="game_info_game_date">試合日</string>
+    <string name="game_info_play_ball_at">開始時刻</string>
+    <string name="game_info_stadium">球場</string>
+    <string name="game_info_stadium_name">球場名</string>
+    <string name="game_info_stadium_abbreviated">略称</string>
+    <string name="game_info_home_team">ホームチーム</string>
+    <string name="game_info_visitor_team">ビジターチーム</string>
+    <string name="game_info_team_name">チーム名</string>
+    <string name="game_info_team_abbreviated">略称</string>
+    <string name="game_info_starting_lineup">スターティングラインナップ</string>
+
+    <string name="select_position_pitcher">P</string>
+    <string name="select_position_catcher">C</string>
+    <string name="select_position_first_baseman">1B</string>
+    <string name="select_position_second_baseman">2B</string>
+    <string name="select_position_third_baseman">3B</string>
+    <string name="select_position_shortstop">SS</string>
+    <string name="select_position_left_fielder">LF</string>
+    <string name="select_position_center_fielder">CF</string>
+    <string name="select_position_right_fielder">RF</string>
+    <string name="select_position_designated_hitter">DH</string>
+
+    <string name="display_position_pitcher">P</string>
+    <string name="display_position_catcher">C</string>
+    <string name="display_position_first_baseman">1B</string>
+    <string name="display_position_second_baseman">2B</string>
+    <string name="display_position_third_baseman">3B</string>
+    <string name="display_position_shortstop">SS</string>
+    <string name="display_position_left_fielder">LF</string>
+    <string name="display_position_center_fielder">CF</string>
+    <string name="display_position_right_fielder">RF</string>
+    <string name="display_position_designated_hitter">DH</string>
+    <string name="display_position_pinch_hitter">PH</string>
+    <string name="display_position_pinch_runner">PR</string>
+
+    <string name="lineup_caption_1">1</string>
+    <string name="lineup_caption_2">2</string>
+    <string name="lineup_caption_3">3</string>
+    <string name="lineup_caption_4">4</string>
+    <string name="lineup_caption_5">5</string>
+    <string name="lineup_caption_6">6</string>
+    <string name="lineup_caption_7">7</string>
+    <string name="lineup_caption_8">8</string>
+    <string name="lineup_caption_9">9</string>
+    <string name="lineup_caption_P">P</string>
+
+    <string name="option_offence_substitution">選手交代（攻撃側）</string>
+    <string name="option_defence_substitution">選手交代（守備側）</string>
+
+    <string name="pitch_result_strike_swung">空振り</string>
+    <string name="pitch_result_strike_called">見逃し</string>
+    <string name="pitch_result_ball">ボール</string>
+    <string name="pitch_result_foul">ファウル</string>
+    <string name="pitch_result_batted">打撃</string>
+    <string name="pitch_result_hit_by_pitch">死球</string>
+    <string name="pitch_result_no_pitch_intentional_walk">申告敬遠</string>
+    <string name="pitch_result_balk">ボーク</string>
+    <string name="pitch_result_others">その他</string>
+
+    <string name="substitution">選手交代</string>
+
+    <string name="pitch_type_four_seam_fastball">ストレート</string>
+    <string name="pitch_type_two_seam_fastball">ツーシーム</string>
+    <string name="pitch_type_shoot_ball">シュート</string>
+    <string name="pitch_type_cutter">カットボール</string>
+    <string name="pitch_type_slider">スライダー</string>
+    <string name="pitch_type_curve_ball">カーブ</string>
+    <string name="pitch_type_fork_ball">フォーク</string>
+    <string name="pitch_type_splitter">スプリット</string>
+    <string name="pitch_type_change_up">チェンジアップ</string>
+    <string name="pitch_type_sinker">シンカー</string>
+    <string name="pitch_type_palm_ball">パーム</string>
+    <string name="pitch_type_knuckle">ナックル</string>
+
+    <string name="batting_option_bunt">バント</string>
+    <string name="batting_option_slash">バスター</string>
+
+    <string name="hint_visitor_team">先攻チーム</string>
+    <string name="hint_home_team">後攻チーム</string>
+
+    <string name="caption_ball">B</string>
+    <string name="caption_strike">S</string>
+    <string name="caption_out">O</string>
+
+    <string name="caption_check_swing">ハーフスイング</string>
+    <string name="caption_hit_and_run">エンドラン</string>
+    <string name="caption_runner">走者</string>
+    <string name="caption_finalizing_pitch">結果球</string>
+
+    <string name="batted_ball_strength_very_hard">激強</string>
+    <string name="batted_ball_strength_hard">強い</string>
+    <string name="batted_ball_strength_medium">普通</string>
+    <string name="batted_ball_strength_weak">弱い</string>
+    <string name="batted_ball_strength_very_weak">激弱</string>
+
+    <string name="batted_ball_type_ground_high_bound">ゴロ(弾)</string>
+    <string name="batted_ball_type_ground">ゴロ</string>
+    <string name="batted_ball_type_line_drive">ライナー</string>
+    <string name="batted_ball_type_fly_ball">フライ</string>
+    <string name="batted_ball_type_high_fly_ball">フライ(高)</string>
+
+    <string name="batting_result_single">単打</string>
+    <string name="batting_result_double">二塁打</string>
+    <string name="batting_result_triple">三塁打</string>
+    <string name="batting_result_home_run">本塁打</string>
+    <string name="batting_result_ground_out">ゴロ</string>
+    <string name="batting_result_line_out">ライナー</string>
+    <string name="batting_result_fly_out">フライ</string>
+    <string name="batting_result_foul_line_out">ファウルライナー</string>
+    <string name="batting_result_foul_fly_out">ファウルフライ</string>
+    <string name="batting_result_sacrifice_hit">犠打</string>
+    <string name="batting_result_sacrifice_fly">犠飛</string>
+
+    <string name="foul_ball_direction_to_backstop">後方</string>
+    <string name="foul_ball_direction_to_first_side">一塁側</string>
+    <string name="foul_ball_direction_to_third_side">三塁側</string>
+    <string name="foul_ball_direction_to_right_field">右翼側</string>
+    <string name="foul_ball_direction_to_left_field">左翼側</string>
+    <string name="foul_ball_is_at_line">ライン際</string>
+
+    <string name="field_play_factor_stealing">盗塁</string>
+    <string name="field_play_factor_pick_off_play">牽制</string>
+    <string name="field_play_factor_wild_pitch">暴投</string>
+    <string name="field_play_factor_passed_ball">捕逸</string>
+    <string name="field_play_factor_obstruction">走塁妨害</string>
+    <string name="field_play_factor_interference_fielding">守備妨害</string>
+    <string name="field_play_factor_interference_batting">打撃妨害</string>
+    <string name="field_play_factor_batting">打撃</string>
+    <string name="field_play_factor_walk">四球</string>
+    <string name="field_play_factor_hit_by_pitch">死球</string>
+
+    <string name="num0">0</string>
+    <string name="num1">1</string>
+    <string name="num2">2</string>
+    <string name="num3">3</string>
+    <string name="num4">4</string>
+    <string name="num5">5</string>
+    <string name="num6">6</string>
+    <string name="num7">7</string>
+    <string name="num8">8</string>
+    <string name="num9">9</string>
+    <string name="numClear">C</string>
+    <string name="OK">OK</string>
+
+    <string name="caption_batter">打者</string>
+    <string name="caption_first_runner">一塁走者</string>
+    <string name="caption_second_runner">二塁走者</string>
+    <string name="caption_third_runner">三塁走者</string>
+    <string name="caption_pinch_hitter">代打</string>
+    <string name="caption_pinch_runner">代走</string>
+
+    <string name="caption_back">戻る</string>
+    <string name="caption_commit">決定</string>
+
+    <string name="date_format">yyyy/mm/dd</string>
+    <string name="time_format">hh:mm</string>
+
+    <string-array name="name_type">
+        <item>名字が先</item>
+        <item>名前が先</item>
+    </string-array>
+
+    <string-array name="hand_type">
+        <item>-</item>
+        <item>右</item>
+        <item>左</item>
+        <item>両</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.PlayerDetailFragment">
+
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.PlayerListViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textIdCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="ID:"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textIdValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.selectedPlayerId}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textIdCaption"
+            app:layout_constraintStart_toEndOf="@id/textIdCaption"
+        />
+
+        <TextView
+            android:id="@+id/textFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@{vm.selectedPlayerFullName}"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/textIdCaption"
+        />
+
+        <TextView
+            android:id="@+id/textFamilyNameCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player_family_name"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/textFullName"
+        />
+
+        <TextView
+            android:id="@+id/textFamilyNameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.selectedPlayerFamilyName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textFamilyNameCaption"
+            app:layout_constraintStart_toEndOf="@id/textFamilyNameCaption"
+        />
+
+        <TextView
+            android:id="@+id/textFirstNameCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player_first_name"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/textFamilyNameCaption"
+        />
+
+        <TextView
+            android:id="@+id/textFirstNameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.selectedPlayerFirstName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textFirstNameCaption"
+            app:layout_constraintStart_toEndOf="@id/textFirstNameCaption"
+        />
+
+        <TextView
+            android:id="@+id/textThrowHandCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player_throw_hand"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/textFirstNameCaption"
+        />
+
+        <TextView
+            android:id="@+id/textThrowHandValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.selectedPlayerThrows}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textThrowHandCaption"
+            app:layout_constraintStart_toEndOf="@id/textThrowHandCaption"
+        />
+
+        <TextView
+            android:id="@+id/textBatHandCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player_bat_hand"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/textThrowHandCaption"
+        />
+
+        <TextView
+            android:id="@+id/textBatHandValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.selectedPlayerBats}"
+            app:layout_constraintBaseline_toBaselineOf="@id/textBatHandCaption"
+            app:layout_constraintStart_toEndOf="@id/textBatHandCaption"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:onClick="@{vm::editCommand}"
+            android:enabled="@{vm.isSelected}"
+            app:layout_constraintTop_toBottomOf="@id/textBatHandCaption"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textBelongingCaption"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/player_belonging_to"
+            app:layout_constraintStart_toStartOf="@id/textIdCaption"
+            app:layout_constraintTop_toBottomOf="@id/buttonEdit"
+        />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/belongingListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/textBelongingCaption"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

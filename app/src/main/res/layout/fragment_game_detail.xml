@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.GameDetailFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.GameListViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{vm.selectedGameId}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textHomeTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.selectedGame.gameInfo.homeTeam.teamName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textId" />
+
+            <TextView
+                android:id="@+id/textVisitorTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.selectedGame.gameInfo.visitorTeam.teamName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textHomeTeam" />
+
+            <TextView
+                android:id="@+id/textStadiumName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.selectedGame.gameInfo.stadiumInfo.stadiumName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textVisitorTeam" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/colorBorder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textStadiumName" />
+
+            <TextView
+                android:id="@+id/textOrderCaption1"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+            <TextView
+                android:id="@+id/textHome1Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(0).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome1Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(0).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor1Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(0).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor1Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(0).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption2"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption1" />
+
+            <TextView
+                android:id="@+id/textHome2Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(1).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome2Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(1).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor2Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(1).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor2Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(1).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption3"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption2" />
+
+            <TextView
+                android:id="@+id/textHome3Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(2).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome3Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(2).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor3Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(2).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor3Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(2).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption4"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption3" />
+
+            <TextView
+                android:id="@+id/textHome4Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(3).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome4Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(3).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor4Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(3).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor4Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(3).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption4"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption5"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption4" />
+
+            <TextView
+                android:id="@+id/textHome5Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(4).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome5Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(4).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor5Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(4).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor5Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(4).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption6"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption5" />
+
+            <TextView
+                android:id="@+id/textHome6Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(5).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome6Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(5).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor6Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(5).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor6Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(5).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption6"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption7"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption6" />
+
+            <TextView
+                android:id="@+id/textHome7Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(6).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome7Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(6).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor7Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(6).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor7Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(6).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption7"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption8"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption7" />
+
+            <TextView
+                android:id="@+id/textHome8Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(7).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome8Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(7).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor8Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(7).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor8Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(7).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption8"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textOrderCaption9"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOrderCaption8" />
+
+            <TextView
+                android:id="@+id/textHome9Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.positions.get(8).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textHome9Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:text="@{vm.selectedGame.boxScore.homeStartingLineup.players.get(8).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor9Position"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="192dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.positions.get(8).singleCharacter}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textVisitor9Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:text="@{vm.selectedGame.boxScore.visitorStartingLineup.players.get(8).playerName.fullName}"
+                app:layout_constraintBaseline_toBaselineOf="@id/textOrderCaption9"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+</layout>

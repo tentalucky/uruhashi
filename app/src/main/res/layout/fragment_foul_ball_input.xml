@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.FoulBallInputFragment"
+>
+    <data>
+        <variable name="vm" type="mahoroba.uruhashi.presentation.FoulBallInputViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <mahoroba.uruhashi.presentation.customView.FoulBallErrorPositionSelectingView
+            android:id="@+id/foulBallErrorPositionView"
+            android:layout_width="0dp"
+            android:layout_height="108dp"
+            app:selected_value="@={vm.positionMakesError}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <mahoroba.uruhashi.presentation.customView.FoulBallDirectionSelectingView
+            android:id="@+id/foulBallDirectionView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:isAtLine="@={vm.isAtLine}"
+            app:selected_value="@={vm.direction}"
+            app:layout_constraintTop_toBottomOf="@id/foulBallErrorPositionView"
+            app:layout_constraintBottom_toTopOf="@id/battingOptionView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <mahoroba.uruhashi.presentation.customView.BattingOptionSelectingView
+            android:id="@+id/battingOptionView"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            app:orientation="horizontal"
+            app:selected_value="@={vm.battingOption}"
+            app:layout_constraintBottom_toTopOf="@id/battedBallTypeView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <mahoroba.uruhashi.presentation.customView.BattedBallTypeSelectingView
+            android:id="@+id/battedBallTypeView"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:selected_value="@={vm.battedBallType}"
+            app:layout_constraintBottom_toTopOf="@id/battedBallStrengthView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <mahoroba.uruhashi.presentation.customView.BattedBallStrengthSelectingView
+            android:id="@+id/battedBallStrengthView"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:selected_value="@={vm.strength}"
+            app:layout_constraintBottom_toTopOf="@id/commitButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::backCommand}"
+            android:text="@string/caption_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/commitButton"
+        />
+        <Button
+            android:id="@+id/commitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::commitCommand}"
+            android:text="@string/caption_commit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

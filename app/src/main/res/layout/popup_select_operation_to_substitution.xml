@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/popup_menu_background"
+        android:elevation="8dp">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/insertOffenceSubstitutionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_menu_item_button_background"
+            android:text="選手交代を挿入する（攻撃側）" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/insertDefenceSubstitutionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_menu_item_button_background"
+            android:text="選手交代を挿入する（守備側）" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/modifySubstitutionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_menu_item_button_background"
+            android:text="選手交代を修正する" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/deleteSubstitutionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_menu_item_button_background"
+            android:text="選手交代を削除する" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v7.widget.LinearLayoutCompat>

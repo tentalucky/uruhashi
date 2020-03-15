@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="mahoroba.uruhashi.presentation.PeriodHistoryListViewModel.PeriodHistoryListItemViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onLongClick="@{(view) -> vm.onLongClicked(view)}">
+
+        <mahoroba.uruhashi.presentation.customView.PeriodHistoryItemView
+            android:id="@+id/periodHistoryItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:gameBaseInfo="@{vm.gameBaseInfo}"
+            app:periodDto="@{vm.period}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
