@@ -14,7 +14,8 @@ import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
 class PitchInputViewModel(
     application: Application,
-    private val playInputSuite: PlayInputSuite
+    private val playInputSuite: PlayInputSuite,
+    defaultPlay: ScoreKeepingUseCase.PlayDto?
 ) :
     BaseViewModel(application) {
 
@@ -122,6 +123,10 @@ class PitchInputViewModel(
 
     val onOptionMenuOpen = LiveEvent<Unit>()
 
+    init {
+        defaultPlay?.let { reproduceInput(it) }
+    }
+
     fun optionCommand(v: View) {
         onOptionMenuOpen.call(Unit)
     }
@@ -131,6 +136,8 @@ class PitchInputViewModel(
             R.id.offenceTeamSubstitution -> playInputSuite.openOffenseSubstitution()
             R.id.defenceTeamSubstitution -> playInputSuite.openDefenceSubstitution()
             R.id.easyReference -> playInputSuite.openEasyReferenceView()
+            R.id.inputGameInfo -> playInputSuite.openGameInfoInputView()
+            R.id.saveGame -> playInputSuite.saveGame()
         }
     }
 
@@ -147,7 +154,7 @@ class PitchInputViewModel(
         playInputSuite.back()
     }
 
-    fun reproduceInput(period: ScoreKeepingUseCase.PeriodDto?) {
+    private fun reproduceInput(period: ScoreKeepingUseCase.PeriodDto?) {
         if (period is ScoreKeepingUseCase.PitchDto) {
             pitchLocationX.value = period.pitchLocationX
             pitchLocationY.value = period.pitchLocationY

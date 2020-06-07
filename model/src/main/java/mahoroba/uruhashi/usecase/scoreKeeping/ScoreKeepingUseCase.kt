@@ -3,6 +3,8 @@ package mahoroba.uruhashi.usecase.scoreKeeping
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import mahoroba.uruhashi.common.LiveEvent
 import mahoroba.uruhashi.domain.*
 import mahoroba.uruhashi.domain.game.*
@@ -126,7 +128,13 @@ class ScoreKeepingUseCase(
         }
     }
 
-    fun persistGame() {
+    suspend fun persistGame() {
+        withContext(Dispatchers.IO) {
+            gameRepository.save(game.value!!)
+        }
+    }
+
+    fun persistGameSubThread() {
         thread {
             gameRepository.save(game.value!!)
         }
@@ -441,7 +449,7 @@ class ScoreKeepingUseCase(
 
         if (!game.value!!.boxScore.canReplacePlay(target.play, foul)) return false
 
-        game.value!!.boxScore.replacePlay(target.play, foul)
+        game.value!!.boxScore.replacePlay(foul, target.play)
         game.value = game.value
 
         return true
@@ -718,7 +726,7 @@ class ScoreKeepingUseCase(
         game.value = game.value
     }
 
-    fun replacePlayWithPlayInInterval(target: PlayDto, fieldPlays: List<FieldPlayDto>) : Boolean {
+    fun replacePlayWithPlayInInterval(target: PlayDto, fieldPlays: List<FieldPlayDto>): Boolean {
         val playInInterval = createPlayInInterval(fieldPlays, target)
 
         if (!game.value!!.boxScore.canReplacePlay(target.play, playInInterval)) return false

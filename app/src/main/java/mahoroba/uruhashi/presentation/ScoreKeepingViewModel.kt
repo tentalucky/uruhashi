@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import kotlinx.coroutines.*
 import mahoroba.uruhashi.di.RepositoryPresenter
 import mahoroba.uruhashi.domain.ID
 import mahoroba.uruhashi.domain.game.Position
@@ -55,7 +57,7 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
     val playInputViewModel: PlayInputViewModel
         get() {
             if (mPlayKeepingViewModel == null) {
-                mPlayKeepingViewModel = PlayInputViewModel(myApplication, useCase)
+                mPlayKeepingViewModel = PlayInputViewModel(myApplication, this, useCase)
             }
             return mPlayKeepingViewModel!!
         }
@@ -72,13 +74,27 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
     }
 
     override fun onCleared() {
-        useCase.persistGame()
+        GlobalScope.launch(Dispatchers.Main) {
+            useCase.persistGame()
+            Toast.makeText(myApplication, "Saved.", Toast.LENGTH_SHORT).show()
+        }
         super.onCleared()
+    }
+
+    fun saveGame() {
+        GlobalScope.launch(Dispatchers.Main) {
+            useCase.persistGame()
+            Toast.makeText(myApplication, "Saved.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun switchToBoxScoreInputFragment() {
         setGameInfo()
         mActiveFragmentType.value = ActiveFragmentType.BOX_SCORE_INPUT
+    }
+
+    fun switchToGameInfoInputFragment() {
+        mActiveFragmentType.value = ActiveFragmentType.GAME_INFO_INPUT
     }
 
     fun commitGameInfo(v: View?) {

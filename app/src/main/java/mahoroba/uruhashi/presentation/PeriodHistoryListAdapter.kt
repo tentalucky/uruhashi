@@ -11,8 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
-import android.widget.Toast
-import kotlinx.android.synthetic.main.popup_select_operation_to_substitution.view.*
+import kotlinx.android.synthetic.main.popup_select_operation_to_period.view.*
 import mahoroba.uruhashi.R
 import mahoroba.uruhashi.databinding.ListItemPeriodHistoryBinding
 import mahoroba.uruhashi.presentation.utility.dpToPx
@@ -59,7 +58,7 @@ class PeriodHistoryListAdapter(
             vm.requireShowPopupMenu.observe(owner, Observer {
                 val popup = PopupWindow(context).apply {
                     val content = LayoutInflater.from(context)
-                        .inflate(R.layout.popup_select_operation_to_substitution, null)
+                        .inflate(R.layout.popup_select_operation_to_period, null)
                     this.contentView = content
                     this.isOutsideTouchable = true
                     this.isFocusable = true
@@ -67,6 +66,13 @@ class PeriodHistoryListAdapter(
                     this.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     this.width = context.dpToPx(240f).toInt()
 
+                    content.modifyPeriodButton?.setOnClickListener {
+                        when (vm.period) {
+                            is ScoreKeepingUseCase.PlayDto -> vm.modifyThisPlay()
+                            is ScoreKeepingUseCase.SubstitutionDto -> vm.modifyThisSubstitution()
+                        }
+                        this.dismiss()
+                    }
                     content.insertOffenceSubstitutionButton?.setOnClickListener {
                         vm.insertOffenceSubstitution()
                         this.dismiss()
@@ -75,13 +81,13 @@ class PeriodHistoryListAdapter(
                         vm.insertDefenceSubstitution()
                         this.dismiss()
                     }
-                    content.modifySubstitutionButton?.setOnClickListener {
-                        vm.modifyThisSubstitution()
-                        this.dismiss()
-                    }
                     content.deleteSubstitutionButton?.setOnClickListener {
                         vm.deleteThisSubstitution()
                         this.dismiss()
+                    }
+
+                    if (vm.period is ScoreKeepingUseCase.PlayDto) {
+                        content.deleteSubstitutionButton?.isEnabled = false
                     }
                 }
 

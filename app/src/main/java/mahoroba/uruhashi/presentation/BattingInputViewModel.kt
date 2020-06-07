@@ -10,7 +10,11 @@ import mahoroba.uruhashi.presentation.base.BaseViewModel
 import mahoroba.uruhashi.presentation.dialog.InputNumberDialogViewModel
 import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
-class BattingInputViewModel(application: Application, private val playInputSuite: PlayInputSuite) :
+class BattingInputViewModel(
+    application: Application,
+    private val playInputSuite: PlayInputSuite,
+    initialValue: ScoreKeepingUseCase.BattingDto?
+) :
     BaseViewModel(application), InputNumberDialogViewModel.Listener {
 
     val result = MutableLiveData<BattingResult>()
@@ -22,10 +26,15 @@ class BattingInputViewModel(application: Application, private val playInputSuite
 
     val inputIsValid = Transformations.map(result) {
         it != null && it != BattingResult.NO_ENTRY
-    }
+    }!!
 
     data class NumberInputDialogParam(val tag: String, val initialValue: Int?)
+
     val openNumberInputDialogEvent = LiveEvent<NumberInputDialogParam>()
+
+    init {
+        initialValue?.let { reproduceInput(it) }
+    }
 
     fun inputDistanceCommand(v: View?) {
         openNumberInputDialogEvent.call(NumberInputDialogParam("", distance.value))

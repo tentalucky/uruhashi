@@ -18,6 +18,7 @@ import java.util.*
 
 class PlayInputViewModel(
     application: Application,
+    private val parentViewModel: ScoreKeepingViewModel,
     private val useCase: ScoreKeepingUseCase
 ) :
     BaseViewModel(application) {
@@ -103,6 +104,10 @@ class PlayInputViewModel(
 
     val fragmentMethod = LiveEvent<(BaseFragment) -> Unit>()
 
+    fun saveGame() {
+        parentViewModel.saveGame()
+    }
+
     fun openOffenseSubstitution() {
         screenSuiteStack.push(
             newOffenceSubstitutionInputSuite(
@@ -123,6 +128,17 @@ class PlayInputViewModel(
 
     fun openEasyReferenceView() {
         screenSuiteStack.push(newEasyReferenceSuite())
+        mActiveFragmentType.value = activeSuite!!.activeFragmentType
+    }
+
+    fun openGameInfoInput() {
+        parentViewModel.switchToGameInfoInputFragment()
+    }
+
+    fun openModifyPlay(targetPlay: PlayDto?) {
+        screenSuiteStack.push(
+            newPlayInputSuite(PlayInputSuite.Mode.MODIFY, targetPlay)
+        )
         mActiveFragmentType.value = activeSuite!!.activeFragmentType
     }
 
@@ -147,7 +163,7 @@ class PlayInputViewModel(
     fun openModifySubstitution(targetSubstitution: SubstitutionDto?) {
         targetSubstitution?.let {
             if (it.teamClass == HOME && it.previousSituation.topOrBottom == BOTTOM ||
-                    it.teamClass == VISITOR && it.previousSituation.topOrBottom == TOP
+                it.teamClass == VISITOR && it.previousSituation.topOrBottom == TOP
             ) {
                 screenSuiteStack.push(
                     newOffenceSubstitutionInputSuite(
@@ -172,74 +188,8 @@ class PlayInputViewModel(
         }
     }
 
-
-    fun back() {
-        if (!transitionStack.isEmpty()) {
-            mActiveFragmentType.value = transitionStack.pop()
-        } else {
-            reproduceInput(useCase.popLastPeriod())
-        }
-    }
-
-    private fun transitionProgressTo(fragmentType: ActiveFragmentType) {
-        transitionStack.push(mActiveFragmentType.value)
-        mActiveFragmentType.value = fragmentType
-    }
-
-    private fun reproduceInput(periodDto: PeriodDto?) {
-        initialize()
-
-        pitchInputViewModel.reproduceInput(periodDto)
-
-        if (periodDto is FoulDto) {
-            transitionProgressTo(FOUL_BALL_INPUT)
-            foulBallInputViewModel.reproduceInput(periodDto)
-        }
-
-        if (periodDto is BattingDto) {
-            transitionProgressTo(BATTED_BALL_INPUT)
-            battingInputViewModel.reproduceInput(periodDto)
-        }
-
-        if (periodDto is BallDto && periodDto.fieldPlays.isNotEmpty() ||
-            periodDto is StrikeDto && periodDto.fieldPlays.isNotEmpty() ||
-            periodDto is BattingDto ||
-            periodDto is PlayWithoutPitchDto
-        ) {
-            transitionProgressTo(FIELD_PLAY_INPUT)
-            fieldPlayInputViewModel.reproduceInput(periodDto)
-        }
-
-        if (periodDto is SubstitutionDto) {
-            val topOrBottom = gameState.value!!.situation.topOrBottom
-            if (periodDto.teamClass == HOME && topOrBottom == TOP
-                ||
-                periodDto.teamClass == TeamClass.VISITOR && topOrBottom == BOTTOM
-            ) {
-                transitionProgressTo(DEFENCE_SUBSTITUTION)
-                defenseSubstitutionInputViewModel.reproduceInput(periodDto)
-            } else {
-                transitionProgressTo(OFFENCE_SUBSTITUTION)
-                offenseSubstitutionInputViewModel.reproduceInput(periodDto)
-            }
-        }
-    }
-
-    private fun initialize() {
-        // TODO: Implement
-//        mPitchInputViewModel = null
-//        mFoulBallInputViewModel = null
-//        mBattingInputViewModel = null
-//        mFieldPlayInputViewModel = null
-//        mOffenseSubstitutionInputViewModel = null
-//        mDefenseSubstitutionInputViewModel = null
-        transitionStack.clear()
-        mActiveFragmentType.value = PITCH_INPUT
-    }
-
     init {
-//        mActiveFragmentType.value = PITCH_INPUT
-        screenSuiteStack.push(newPlayInputSuite())
+        screenSuiteStack.push(newPlayInputSuite(PlayInputSuite.Mode.NEW, null))
         mActiveFragmentType.value = activeSuite!!.activeFragmentType
     }
 
@@ -247,7 +197,7 @@ class PlayInputViewModel(
         screenSuiteStack.pop()
 
         if (screenSuiteStack.isEmpty()) {
-            screenSuiteStack.push(newPlayInputSuite())
+            screenSuiteStack.push(newPlayInputSuite(PlayInputSuite.Mode.NEW, null))
         }
 
         mActiveFragmentType.value = activeSuite!!.activeFragmentType
@@ -259,8 +209,7 @@ class PlayInputViewModel(
         if (screenSuiteStack.isEmpty()) {
             val period = useCase.popLastPeriod()
 
-            newPlayInputSuite().let {
-                if (period is PlayDto) it.load(period)
+            newPlayInputSuite(PlayInputSuite.Mode.NEW, period as? PlayDto).let {
                 screenSuiteStack.push(it)
             }
 
@@ -290,9 +239,13 @@ class PlayInputViewModel(
         mActiveFragmentType.value = activeSuite!!.activeFragmentType
     }
 
-    private fun newPlayInputSuite(): PlayInputSuite {
+    private fun newPlayInputSuite(
+        mode: PlayInputSuite.Mode,
+        targetPlay: PlayDto?
+    ): PlayInputSuite {
         return PlayInputSuite(
-            this, useCase, this::suiteCompleted, this::suiteCanceled, this::changeFragment
+            this, useCase, mode, targetPlay,
+            this::suiteCompleted, this::suiteCanceled, this::changeFragment
         )
     }
 

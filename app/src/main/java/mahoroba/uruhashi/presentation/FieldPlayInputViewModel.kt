@@ -12,7 +12,8 @@ import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
 class FieldPlayInputViewModel(
     application: Application,
-    private val playInputSuite: PlayInputSuite
+    private val playInputSuite: PlayInputSuite,
+    initialValue: ScoreKeepingUseCase.PlayDto?
 ) :
     BaseViewModel(application) {
 
@@ -124,15 +125,18 @@ class FieldPlayInputViewModel(
     }
 
     val isBRActive = playInputSuite.isBatterRunnerActive
-    val is1ROnBase = Transformations.map(playInputSuite.gameState) {
-        it.situation.orderOf1R != null
-    }!!
-    val is2ROnBase = Transformations.map(playInputSuite.gameState) {
-        it.situation.orderOf2R != null
-    }!!
-    val is3ROnBase = Transformations.map(playInputSuite.gameState) {
-        it.situation.orderOf3R != null
-    }!!
+    val is1ROnBase = when (playInputSuite.mode) {
+        PlayInputSuite.Mode.NEW -> playInputSuite.gameState.value!!.situation.orderOf1R != null
+        PlayInputSuite.Mode.MODIFY -> initialValue?.runnerIsOn1B == true
+    }
+    val is2ROnBase = when (playInputSuite.mode) {
+        PlayInputSuite.Mode.NEW -> playInputSuite.gameState.value!!.situation.orderOf2R != null
+        PlayInputSuite.Mode.MODIFY -> initialValue?.runnerIsOn2B == true
+    }
+    val is3ROnBase = when (playInputSuite.mode) {
+        PlayInputSuite.Mode.NEW -> playInputSuite.gameState.value!!.situation.orderOf3R != null
+        PlayInputSuite.Mode.MODIFY -> initialValue?.runnerIsOn3B == true
+    }
 
     val batterRunnerMovement = MutableLiveData<RunnerMovement>()
     val firstRunnerMovement = MutableLiveData<RunnerMovement>()
@@ -157,6 +161,8 @@ class FieldPlayInputViewModel(
         mInputIsValid.value = false
         setDefaultState()
         updateAll()
+
+        initialValue?.let { reproduceInput(it) }
     }
 
     fun onFielderSelected(it: FieldPosition) {
@@ -284,9 +290,9 @@ class FieldPlayInputViewModel(
 
     val onBatterRunnerMovementChanged: (RunnerMovement?) -> Unit = {
         if (it?.putout == true) {
-            if (is1ROnBase.value == true) makeRunnerMovementSafe(firstRunnerMovement)
-            if (is2ROnBase.value == true) makeRunnerMovementSafe(secondRunnerMovement)
-            if (is3ROnBase.value == true) makeRunnerMovementSafe(thirdRunnerMovement)
+            if (is1ROnBase) makeRunnerMovementSafe(firstRunnerMovement)
+            if (is2ROnBase) makeRunnerMovementSafe(secondRunnerMovement)
+            if (is3ROnBase) makeRunnerMovementSafe(thirdRunnerMovement)
         }
         updateAll()
     }
@@ -294,8 +300,8 @@ class FieldPlayInputViewModel(
     val onFirstRunnerMovementChanged: (RunnerMovement?) -> Unit = {
         if (it?.putout == true) {
             if (isBRActive) makeRunnerMovementSafe(batterRunnerMovement)
-            if (is2ROnBase.value == true) makeRunnerMovementSafe(secondRunnerMovement)
-            if (is3ROnBase.value == true) makeRunnerMovementSafe(thirdRunnerMovement)
+            if (is2ROnBase) makeRunnerMovementSafe(secondRunnerMovement)
+            if (is3ROnBase) makeRunnerMovementSafe(thirdRunnerMovement)
         }
         updateAll()
     }
@@ -303,8 +309,8 @@ class FieldPlayInputViewModel(
     val onSecondRunnerMovementChanged: (RunnerMovement?) -> Unit = {
         if (it?.putout == true) {
             if (isBRActive) makeRunnerMovementSafe(batterRunnerMovement)
-            if (is1ROnBase.value == true) makeRunnerMovementSafe(firstRunnerMovement)
-            if (is3ROnBase.value == true) makeRunnerMovementSafe(thirdRunnerMovement)
+            if (is1ROnBase) makeRunnerMovementSafe(firstRunnerMovement)
+            if (is3ROnBase) makeRunnerMovementSafe(thirdRunnerMovement)
         }
         updateAll()
     }
@@ -312,8 +318,8 @@ class FieldPlayInputViewModel(
     val onThirdRunnerMovementChanged: (RunnerMovement?) -> Unit = {
         if (it?.putout == true) {
             if (isBRActive) makeRunnerMovementSafe(batterRunnerMovement)
-            if (is1ROnBase.value == true) makeRunnerMovementSafe(firstRunnerMovement)
-            if (is2ROnBase.value == true) makeRunnerMovementSafe(secondRunnerMovement)
+            if (is1ROnBase) makeRunnerMovementSafe(firstRunnerMovement)
+            if (is2ROnBase) makeRunnerMovementSafe(secondRunnerMovement)
         }
         updateAll()
     }
@@ -439,18 +445,26 @@ class FieldPlayInputViewModel(
         mBallRelay.value = builder.toString()
     }
 
-    fun reproduceInput(periodDto: ScoreKeepingUseCase.PeriodDto) {
+    private fun reproduceInput(playDto: ScoreKeepingUseCase.PlayDto) {
 
-        val fieldPlayList = when (periodDto) {
-            is ScoreKeepingUseCase.BallDto -> periodDto.fieldPlays
-            is ScoreKeepingUseCase.StrikeDto -> periodDto.fieldPlays
-            is ScoreKeepingUseCase.BattingDto -> periodDto.fieldPlays
-            is ScoreKeepingUseCase.PlayWithoutPitchDto -> periodDto.fieldPlays
+        val fieldPlayList = when (playDto) {
+            is ScoreKeepingUseCase.BallDto -> playDto.fieldPlays
+            is ScoreKeepingUseCase.StrikeDto -> playDto.fieldPlays
+            is ScoreKeepingUseCase.BattingDto -> playDto.fieldPlays
+            is ScoreKeepingUseCase.PlayWithoutPitchDto -> playDto.fieldPlays
             else -> ArrayList()
         }
 
-        val situation = playInputSuite.gameState.value!!.situation
-        var whereBR = if (playInputSuite.isBatterRunnerActive) 0 else null
+        val situation = playDto.previousSituation
+        var whereBR = when {
+            playDto is ScoreKeepingUseCase.BallDto && playDto.settled -> 0
+            playDto is ScoreKeepingUseCase.StrikeDto && playDto.settled -> 0
+            playDto is ScoreKeepingUseCase.BattingDto -> 0
+            playDto is ScoreKeepingUseCase.HitByPitchDto -> 0
+            else -> null
+        }
+//        val situation = playInputSuite.gameState.value!!.situation
+//        var whereBR = if (playInputSuite.isBatterRunnerActive) 0 else null
         var where1R = if (situation.orderOf1R != null) 1 else null
         var where2R = if (situation.orderOf2R != null) 2 else null
         var where3R = if (situation.orderOf3R != null) 3 else null

@@ -13,6 +13,14 @@
         android:elevation="8dp">
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/modifyPeriodButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_menu_item_button_background"
+            android:text="修正する"
+            />
+
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/insertOffenceSubstitutionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,13 +33,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/popup_menu_item_button_background"
             android:text="選手交代を挿入する（守備側）" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/modifySubstitutionButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/popup_menu_item_button_background"
-            android:text="選手交代を修正する" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/deleteSubstitutionButton"

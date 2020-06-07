@@ -1,5 +1,7 @@
 package mahoroba.uruhashi.presentation
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations
 import mahoroba.uruhashi.domain.game.*
 import mahoroba.uruhashi.presentation.PlayInputViewModel.*
 import mahoroba.uruhashi.presentation.PlayInputViewModel.ActiveFragmentType.*
@@ -12,17 +14,25 @@ import kotlin.collections.ArrayList
 class PlayInputSuite(
     private val parentViewModel: PlayInputViewModel,
     private val useCase: ScoreKeepingUseCase,
+    val mode: Mode,
+    val loadedPlay: PlayDto?,
     onCompleteListener: () -> Unit,
     onCancelListener: () -> Unit,
     activeFragmentSetter: (ActiveFragmentType, ScreenSuite) -> Unit
 ) : ScreenSuite(onCompleteListener, onCancelListener, activeFragmentSetter) {
+
+    enum class Mode {
+        NEW,
+        MODIFY
+    }
+
     // region * View models *
 
     private var mPitchInputViewModel: PitchInputViewModel? = null
     val pitchInputViewModel: PitchInputViewModel
         get() {
             if (mPitchInputViewModel == null) mPitchInputViewModel =
-                parentViewModel.let { PitchInputViewModel(it.getApplication(), this) }
+                PitchInputViewModel(parentViewModel.getApplication(), this, loadedPlay)
             return mPitchInputViewModel!!
         }
 
@@ -30,7 +40,9 @@ class PlayInputSuite(
     val foulBallInputViewModel: FoulBallInputViewModel
         get() {
             if (mFoulBallInputViewModel == null) mFoulBallInputViewModel =
-                parentViewModel.let { FoulBallInputViewModel(it.getApplication(), this) }
+                FoulBallInputViewModel(
+                    parentViewModel.getApplication(), this, loadedPlay as? FoulDto
+                )
             return mFoulBallInputViewModel!!
         }
 
@@ -38,7 +50,9 @@ class PlayInputSuite(
     val battingInputViewModel: BattingInputViewModel
         get() {
             if (mBattingInputViewModel == null) mBattingInputViewModel =
-                parentViewModel.let { BattingInputViewModel(it.getApplication(), this) }
+                BattingInputViewModel(
+                    parentViewModel.getApplication(), this, loadedPlay as? BattingDto
+                )
             return mBattingInputViewModel!!
         }
 
@@ -46,7 +60,9 @@ class PlayInputSuite(
     val fieldPlayInputViewModel: FieldPlayInputViewModel
         get() {
             if (mFieldPlayInputViewModel == null) mFieldPlayInputViewModel =
-                parentViewModel.let { FieldPlayInputViewModel(it.getApplication(), this) }
+                FieldPlayInputViewModel(
+                    parentViewModel.getApplication(), this, loadedPlay
+                )
             return mFieldPlayInputViewModel!!
         }
 
@@ -60,11 +76,17 @@ class PlayInputSuite(
 
     val gameBaseInfo = useCase.gameBaseInfo
     val gameState = useCase.latestGameState
-    val pitchList = useCase.pitchListOfLastPlateAppearance
+    val pitchList: LiveData<List<PitchInfoDto>> =
+        Transformations.map(useCase.pitchListOfLastPlateAppearance) {
+            when (mode) {
+                Mode.NEW -> it
+                Mode.MODIFY -> emptyList()
+            }
+        }
 
     val isBatterRunnerActive: Boolean
         get() {
-            return when (mPitchInputViewModel?.selectedPitchResult?.value) {
+            return when (pitchInputViewModel.selectedPitchResult.value) {
                 PitchInputViewModel.UIPitchResult.BATTED, PitchInputViewModel.UIPitchResult.HIT_BY_PITCH ->
                     true
                 PitchInputViewModel.UIPitchResult.FOUL ->
@@ -72,16 +94,20 @@ class PlayInputSuite(
                 PitchInputViewModel.UIPitchResult.BALL,
                 PitchInputViewModel.UIPitchResult.STRIKE_CALLED,
                 PitchInputViewModel.UIPitchResult.STRIKE_SWUNG ->
-                    (mPitchInputViewModel?.isFinalizing?.value) == true
+                    (pitchInputViewModel.isFinalizing.value) == true
                 else ->
                     false
             }
         }
 
     val pitchResult: PitchInputViewModel.UIPitchResult?
-        get() = mPitchInputViewModel?.selectedPitchResult?.value
+        get() = pitchInputViewModel.selectedPitchResult.value
     val isFinalizing: Boolean
-        get() = mPitchInputViewModel?.isFinalizing?.value ?: false
+        get() = pitchInputViewModel.isFinalizing.value ?: false
+
+    fun saveGame() {
+        parentViewModel.saveGame()
+    }
 
     fun openOffenseSubstitution() {
         parentViewModel.openOffenseSubstitution()
@@ -95,6 +121,10 @@ class PlayInputSuite(
         parentViewModel.openEasyReferenceView()
     }
 
+    fun openGameInfoInputView() {
+        parentViewModel.openGameInfoInput()
+    }
+
     fun settlePitchInput() {
         pitchInputViewModel.let {
             when (it.selectedPitchResult.value) {
@@ -102,8 +132,7 @@ class PlayInputSuite(
                     if (it.areRunnersMakingAction.value == true || it.isFinalizing.value == true) {
                         transitionProgressTo(FIELD_PLAY_INPUT)
                     } else {
-                        registerBall(false)
-                        complete()
+                        if (registerBall(false)) complete()
                     }
                 }
 
@@ -111,8 +140,7 @@ class PlayInputSuite(
                     if (it.areRunnersMakingAction.value == true || it.isFinalizing.value == true) {
                         transitionProgressTo(FIELD_PLAY_INPUT)
                     } else {
-                        registerStrike(false)
-                        complete()
+                        if (registerStrike(false)) complete()
                     }
                 }
 
@@ -121,18 +149,15 @@ class PlayInputSuite(
                 PitchInputViewModel.UIPitchResult.BATTED -> transitionProgressTo(BATTED_BALL_INPUT)
 
                 PitchInputViewModel.UIPitchResult.HIT_BY_PITCH -> {
-                    registerHitByPitch()
-                    complete()
+                    if (registerHitByPitch()) complete()
                 }
 
                 PitchInputViewModel.UIPitchResult.NO_PITCH_INTENTIONAL_WALK -> {
-                    registerNoPitchIntentionalWalk()
-                    complete()
+                    if (registerNoPitchIntentionalWalk()) complete()
                 }
 
                 PitchInputViewModel.UIPitchResult.BALK -> {
-                    registerBalk()
-                    complete()
+                    if (registerBalk()) complete()
                 }
 
                 PitchInputViewModel.UIPitchResult.OTHER -> transitionProgressTo(FIELD_PLAY_INPUT)
@@ -141,8 +166,7 @@ class PlayInputSuite(
     }
 
     fun settleFoulBallInput() {
-        registerFoul()
-        complete()
+        if (registerFoul()) complete()
     }
 
     fun settleBattedBallInput() {
@@ -150,16 +174,15 @@ class PlayInputSuite(
     }
 
     fun settleFieldPlayInput() {
-        when (mPitchInputViewModel?.selectedPitchResult?.value) {
-            PitchInputViewModel.UIPitchResult.STRIKE_CALLED,
-            PitchInputViewModel.UIPitchResult.STRIKE_SWUNG -> registerStrike(true)
-            PitchInputViewModel.UIPitchResult.BALL -> registerBall(true)
-            PitchInputViewModel.UIPitchResult.BATTED -> registerBatting()
-            PitchInputViewModel.UIPitchResult.OTHER -> registerPlayWithoutPitch()
-            else -> {
+        if (when (pitchInputViewModel.selectedPitchResult.value) {
+                PitchInputViewModel.UIPitchResult.STRIKE_CALLED,
+                PitchInputViewModel.UIPitchResult.STRIKE_SWUNG -> registerStrike(true)
+                PitchInputViewModel.UIPitchResult.BALL -> registerBall(true)
+                PitchInputViewModel.UIPitchResult.BATTED -> registerBatting()
+                PitchInputViewModel.UIPitchResult.OTHER -> registerPlayWithoutPitch()
+                else -> false
             }
-        }
-        complete()
+        ) complete()
     }
 
     fun back() {
@@ -173,143 +196,255 @@ class PlayInputSuite(
         }
     }
 
-    fun load(playDto: PlayDto) {
-        initialize()
-
-        pitchInputViewModel.reproduceInput(playDto)
-
-        if (playDto is FoulDto) {
-            transitionProgressTo(FOUL_BALL_INPUT)
-            foulBallInputViewModel.reproduceInput(playDto)
-        }
-
-        if (playDto is BattingDto) {
-            transitionProgressTo(BATTED_BALL_INPUT)
-            battingInputViewModel.reproduceInput(playDto)
-        }
-
-        if (playDto is BallDto && playDto.fieldPlays.isNotEmpty() ||
-            playDto is StrikeDto && playDto.fieldPlays.isNotEmpty() ||
-            playDto is BattingDto ||
-            playDto is PlayWithoutPitchDto
-        ) {
-            transitionProgressTo(FIELD_PLAY_INPUT)
-            fieldPlayInputViewModel.reproduceInput(playDto)
-        }
-    }
-
     private fun transitionProgressTo(fragmentType: ActiveFragmentType) {
         transitionStack.push(mActiveFragmentType)
         mActiveFragmentType = fragmentType
         activeFragmentSetter(fragmentType, this)
     }
 
-    private fun registerBall(fieldPlayOccurred: Boolean) {
-        mPitchInputViewModel!!.let {
-            useCase.addBall(
-                it.selectedPitchType.value,
-                it.pitchSpeed.value,
-                it.pitchLocationX.value,
-                it.pitchLocationY.value,
-                it.selectedBattingOption.value,
-                it.withHitAndRun.value ?: false,
-                it.isFinalizing.value!!,
-                if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
-            )
+    private fun registerBall(fieldPlayOccurred: Boolean): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                pitchInputViewModel.let {
+                    useCase.addBall(
+                        it.selectedPitchType.value,
+                        it.pitchSpeed.value,
+                        it.pitchLocationX.value,
+                        it.pitchLocationY.value,
+                        it.selectedBattingOption.value,
+                        it.withHitAndRun.value ?: false,
+                        it.isFinalizing.value!!,
+                        if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
+                    )
+                    true
+                }
+            }
+            Mode.MODIFY -> {
+                pitchInputViewModel.let {
+                    useCase.replacePlayWithBall(
+                        loadedPlay!!,
+                        it.selectedPitchType.value,
+                        it.pitchSpeed.value,
+                        it.pitchLocationX.value,
+                        it.pitchLocationY.value,
+                        it.selectedBattingOption.value,
+                        it.withHitAndRun.value ?: false,
+                        it.isFinalizing.value!!,
+                        if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
+                    )
+                }
+            }
         }
     }
 
-    private fun registerStrike(fieldPlayOccurred: Boolean) {
-        mPitchInputViewModel!!.let {
-            useCase.addStrike(
-                it.selectedPitchType.value,
-                it.pitchSpeed.value,
-                it.pitchLocationX.value,
-                it.pitchLocationY.value,
-                it.selectedBattingOption.value,
-                it.withHitAndRun.value ?: false,
-                it.isFinalizing.value!!,
-                when (it.selectedPitchResult.value) {
-                    PitchInputViewModel.UIPitchResult.STRIKE_SWUNG -> Strike.StrikeType.SWINGING
-                    PitchInputViewModel.UIPitchResult.STRIKE_CALLED -> Strike.StrikeType.LOOKING
-                    else -> throw RuntimeException("Pitch result must be Strike.")
-                },
-                if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
-            )
+    private fun registerStrike(fieldPlayOccurred: Boolean): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                pitchInputViewModel.let {
+                    useCase.addStrike(
+                        it.selectedPitchType.value,
+                        it.pitchSpeed.value,
+                        it.pitchLocationX.value,
+                        it.pitchLocationY.value,
+                        it.selectedBattingOption.value,
+                        it.withHitAndRun.value ?: false,
+                        it.isFinalizing.value!!,
+                        when (it.selectedPitchResult.value) {
+                            PitchInputViewModel.UIPitchResult.STRIKE_SWUNG -> Strike.StrikeType.SWINGING
+                            PitchInputViewModel.UIPitchResult.STRIKE_CALLED -> Strike.StrikeType.LOOKING
+                            else -> throw RuntimeException("Pitch result must be Strike.")
+                        },
+                        if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
+                    )
+                }
+                true
+            }
+            Mode.MODIFY -> {
+                pitchInputViewModel.let {
+                    useCase.replacePlayWithStrike(
+                        loadedPlay!!,
+                        it.selectedPitchType.value,
+                        it.pitchSpeed.value,
+                        it.pitchLocationX.value,
+                        it.pitchLocationY.value,
+                        it.selectedBattingOption.value,
+                        it.withHitAndRun.value ?: false,
+                        it.isFinalizing.value!!,
+                        when (it.selectedPitchResult.value) {
+                            PitchInputViewModel.UIPitchResult.STRIKE_SWUNG -> Strike.StrikeType.SWINGING
+                            PitchInputViewModel.UIPitchResult.STRIKE_CALLED -> Strike.StrikeType.LOOKING
+                            else -> throw RuntimeException("Pitch result must be Strike.")
+                        },
+                        if (fieldPlayOccurred) mFieldPlayInputViewModel!!.getFieldPlayDtoList() else ArrayList()
+                    )
+                }
+            }
         }
     }
 
-    private fun registerFoul() {
-        useCase.addFoul(
-            mPitchInputViewModel!!.selectedPitchType.value,
-            mPitchInputViewModel!!.pitchSpeed.value,
-            mPitchInputViewModel!!.pitchLocationX.value,
-            mPitchInputViewModel!!.pitchLocationY.value,
-            mPitchInputViewModel!!.selectedBattingOption.value,
-            mPitchInputViewModel!!.withHitAndRun.value ?: false,
-            mFoulBallInputViewModel!!.direction.value,
-            mFoulBallInputViewModel!!.isAtLine.value,
-            mFoulBallInputViewModel!!.battedBallType.value,
-            mFoulBallInputViewModel!!.strength.value,
-            mFoulBallInputViewModel!!.positionMakesError.value
+    private fun registerFoul(): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addFoul(
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false,
+                    foulBallInputViewModel.direction.value,
+                    foulBallInputViewModel.isAtLine.value,
+                    foulBallInputViewModel.battedBallType.value,
+                    foulBallInputViewModel.strength.value,
+                    foulBallInputViewModel.positionMakesError.value
+                )
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithFoul(
+                    loadedPlay!!,
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false,
+                    foulBallInputViewModel.direction.value,
+                    foulBallInputViewModel.isAtLine.value,
+                    foulBallInputViewModel.battedBallType.value,
+                    foulBallInputViewModel.strength.value,
+                    foulBallInputViewModel.positionMakesError.value
+                )
+            }
+        }
+    }
+
+    private fun registerHitByPitch(): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addHitByPitch(
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false
+                )
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithHitByPitch(
+                    loadedPlay!!,
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false
+                )
+            }
+        }
+    }
+
+    private fun registerBatting(): Boolean {
+        val battedBall = BattedBall(
+            battingInputViewModel.direction.value,
+            battingInputViewModel.battedBallType.value ?: BattedBallType.NO_ENTRY,
+            battingInputViewModel.strength.value ?: BattedBallStrength.NO_ENTRY,
+            battingInputViewModel.distance.value,
+            pitchInputViewModel.selectedBattingOption.value == BattingOption.BUNT
         )
+
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addBatting(
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false,
+                    battedBall,
+                    fieldPlayInputViewModel.getFieldPlayDtoList(),
+                    battingInputViewModel.result.value!!
+                )
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithBatting(
+                    loadedPlay!!,
+                    pitchInputViewModel.selectedPitchType.value,
+                    pitchInputViewModel.pitchSpeed.value,
+                    pitchInputViewModel.pitchLocationX.value,
+                    pitchInputViewModel.pitchLocationY.value,
+                    pitchInputViewModel.selectedBattingOption.value,
+                    pitchInputViewModel.withHitAndRun.value ?: false,
+                    battedBall,
+                    fieldPlayInputViewModel.getFieldPlayDtoList(),
+                    battingInputViewModel.result.value!!
+                )
+            }
+        }
     }
 
-    private fun registerHitByPitch() {
-        useCase.addHitByPitch(
-            mPitchInputViewModel!!.selectedPitchType.value,
-            mPitchInputViewModel!!.pitchSpeed.value,
-            mPitchInputViewModel!!.pitchLocationX.value,
-            mPitchInputViewModel!!.pitchLocationY.value,
-            mPitchInputViewModel!!.selectedBattingOption.value,
-            mPitchInputViewModel!!.withHitAndRun.value ?: false
-        )
+    private fun registerNoPitchIntentionalWalk(): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addNoPitchIntentionalWalk()
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithNoPitchIntentionalWalk(loadedPlay!!)
+            }
+        }
     }
 
-    private fun registerBatting() {
-        useCase.addBatting(
-            mPitchInputViewModel!!.selectedPitchType.value,
-            mPitchInputViewModel!!.pitchSpeed.value,
-            mPitchInputViewModel!!.pitchLocationX.value,
-            mPitchInputViewModel!!.pitchLocationY.value,
-            mPitchInputViewModel!!.selectedBattingOption.value,
-            mPitchInputViewModel!!.withHitAndRun.value ?: false,
-            BattedBall(
-                mBattingInputViewModel!!.direction.value,
-                mBattingInputViewModel!!.battedBallType.value ?: BattedBallType.NO_ENTRY,
-                mBattingInputViewModel!!.strength.value ?: BattedBallStrength.NO_ENTRY,
-                mBattingInputViewModel!!.distance.value,
-                mPitchInputViewModel!!.selectedBattingOption.value == BattingOption.BUNT
-            ),
-            mFieldPlayInputViewModel!!.getFieldPlayDtoList(),
-            mBattingInputViewModel!!.result.value!!
-        )
+    private fun registerBalk(): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addBalk()
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithBalk(loadedPlay!!)
+            }
+        }
     }
 
-    private fun registerNoPitchIntentionalWalk() {
-        useCase.addNoPitchIntentionalWalk()
-    }
-
-    private fun registerBalk() {
-        useCase.addBalk()
-    }
-
-    private fun registerPlayWithoutPitch() {
-        useCase.addPlayWithoutPitch(
-            mFieldPlayInputViewModel!!.getFieldPlayDtoList()
-        )
-    }
-
-    private fun initialize() {
-        mPitchInputViewModel = null
-        mFoulBallInputViewModel = null
-        mBattingInputViewModel = null
-        mFieldPlayInputViewModel = null
-        transitionStack.clear()
-        mActiveFragmentType = PITCH_INPUT
+    private fun registerPlayWithoutPitch(): Boolean {
+        return when (mode) {
+            Mode.NEW -> {
+                useCase.addPlayWithoutPitch(
+                    mFieldPlayInputViewModel!!.getFieldPlayDtoList()
+                )
+                true
+            }
+            Mode.MODIFY -> {
+                useCase.replacePlayWithPlayInInterval(
+                    loadedPlay!!,
+                    mFieldPlayInputViewModel!!.getFieldPlayDtoList()
+                )
+            }
+        }
     }
 
     init {
         mActiveFragmentType = PITCH_INPUT
+
+        if (mode == Mode.NEW && loadedPlay != null) {
+            if (loadedPlay is FoulDto) {
+                transitionProgressTo(FOUL_BALL_INPUT)
+            }
+            if (loadedPlay is BattingDto) {
+                transitionProgressTo(BATTED_BALL_INPUT)
+            }
+            if (loadedPlay is BallDto && loadedPlay.fieldPlays.isNotEmpty() ||
+                loadedPlay is StrikeDto && loadedPlay.fieldPlays.isNotEmpty() ||
+                loadedPlay is BattingDto ||
+                loadedPlay is PlayWithoutPitchDto
+            ) {
+                transitionProgressTo(FIELD_PLAY_INPUT)
+            }
+        }
     }
 }

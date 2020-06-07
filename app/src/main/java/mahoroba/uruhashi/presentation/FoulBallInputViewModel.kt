@@ -7,7 +7,11 @@ import mahoroba.uruhashi.domain.game.*
 import mahoroba.uruhashi.presentation.base.BaseViewModel
 import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
-class FoulBallInputViewModel(application: Application, private val playInputSuite: PlayInputSuite) :
+class FoulBallInputViewModel(
+    application: Application,
+    private val playInputSuite: PlayInputSuite,
+    initialValue: ScoreKeepingUseCase.FoulDto?
+) :
     BaseViewModel(application) {
 
     val direction = MutableLiveData<FoulBallDirection?>()
@@ -16,6 +20,10 @@ class FoulBallInputViewModel(application: Application, private val playInputSuit
     val battedBallType = MutableLiveData<BattedBallType?>()
     val strength = MutableLiveData<BattedBallStrength?>()
     val positionMakesError = MutableLiveData<FieldPosition?>()
+
+    init {
+        initialValue?.let { reproduceInput(it) }
+    }
 
     fun commitCommand(v: View?) {
         playInputSuite.settleFoulBallInput()

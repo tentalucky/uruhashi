@@ -13,4 +13,12 @@
         android:id="@+id/easyReference"
         android:title="簡易照会" />
 
+    <item
+        android:id="@+id/inputGameInfo"
+        android:title="試合情報入力" />
+
+    <item
+        android:id="@+id/saveGame"
+        android:title="保存" />
+
 </menu>

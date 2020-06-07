@@ -28,6 +28,12 @@ class PeriodHistoryListViewModel(
             return true
         }
 
+        fun modifyThisPlay() {
+            if (period is ScoreKeepingUseCase.PlayDto) {
+                parentViewModel.openModifyPlay(period)
+            }
+        }
+
         fun insertOffenceSubstitution() {
             parentViewModel.openInsertOffenceSubstitution(period)
         }
