@@ -42,10 +42,10 @@ class GameRepository(application: Application) : IGameRepository {
 
     override fun save(game: Game) {
         db.runInTransaction {
-            if (game.id.isJustGenerated) {
-                gameDao.insertGame(GameData(game))
-            } else {
+            if (gameDao.isGameIdExists(game.id)) {
                 gameDao.updateGame(GameData(game))
+            } else {
+                gameDao.insertGame(GameData(game))
             }
 
             startingMemberDao.deleteMembers(game.id)

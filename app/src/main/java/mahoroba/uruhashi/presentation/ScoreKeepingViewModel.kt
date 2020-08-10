@@ -83,8 +83,13 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
 
     fun saveGame() {
         GlobalScope.launch(Dispatchers.Main) {
-            useCase.persistGame()
-            Toast.makeText(myApplication, "Saved.", Toast.LENGTH_SHORT).show()
+            try {
+                useCase.persistGame()
+                Toast.makeText(myApplication, "Saved.", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(myApplication, "Failed to save.\n" + e.message, Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
