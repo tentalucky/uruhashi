@@ -4,7 +4,7 @@ import mahoroba.uruhashi.domain.HandType
 import mahoroba.uruhashi.domain.ID
 import mahoroba.uruhashi.domain.PersonName
 
-class StartingLineup {
+class StartingLineup (private val onPositionChangedListener: () -> Unit) {
     var hasDH: Boolean = false
         private set
 
@@ -38,10 +38,19 @@ class StartingLineup {
             }
         }
 
+        var isPositionChanged = false
         for (i in 0..8) {
-            mPositionsInOrder[i] = positions[i]
+            if (mPositionsInOrder[i] != positions[i]) {
+                mPositionsInOrder[i] = positions[i]
+                isPositionChanged = true
+            }
         }
-        this.hasDH = hasDH
+        if (this.hasDH != hasDH) {
+            this.hasDH = hasDH
+            isPositionChanged = true
+        }
+
+        if (isPositionChanged) onPositionChangedListener.invoke()
     }
 
     fun setPlayersProfile(

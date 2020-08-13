@@ -175,6 +175,8 @@ class ScoreKeepingUseCase(
             HOME -> game.value?.boxScore?.homeStartingLineup
             VISITOR -> game.value?.boxScore?.visitorStartingLineup
         }?.setPositions(positions, hasDH)
+
+        game.value = game.value
     }
 
     fun getStartingPositions(teamClass: TeamClass): List<Position> {

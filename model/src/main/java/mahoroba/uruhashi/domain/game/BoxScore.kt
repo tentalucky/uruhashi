@@ -5,8 +5,8 @@ import mahoroba.uruhashi.domain.game.secondary.Lineup
 import mahoroba.uruhashi.domain.game.secondary.Situation
 
 class BoxScore {
-    val homeStartingLineup = StartingLineup()
-    val visitorStartingLineup = StartingLineup()
+    val homeStartingLineup = StartingLineup(this::onStartingPositionChanged)
+    val visitorStartingLineup = StartingLineup(this::onStartingPositionChanged)
 
     var gameStatus: GameStatus? = null
         private set
@@ -41,7 +41,7 @@ class BoxScore {
             innings.subList(innings.indexOf(inning) + 1, innings.size).forEach { inn ->
                 inn.replaceFirstPeriodLineup(lastHomeLineup, lastVisitorLineup)
 
-                inn.plateAppearances.firstOrNull()?.periods?.firstOrNull()?.let {
+                inn.plateAppearances.lastOrNull()?.periods?.lastOrNull()?.let {
                     lastHomeLineup =
                         if (it is Substitution && it.teamClass == HOME) it.homeLineup.after(it)
                         else it.homeLineup
@@ -64,6 +64,24 @@ class BoxScore {
                 this::onSubstitutionInsertedIntoInning
             )
         )
+    }
+
+    private fun onStartingPositionChanged() {
+        var lastHomeLineup = Lineup(homeStartingLineup)
+        var lastVisitorLineup = Lineup(visitorStartingLineup)
+
+        innings.forEach { inn ->
+            inn.replaceFirstPeriodLineup(lastHomeLineup, lastVisitorLineup)
+
+            inn.plateAppearances.lastOrNull()?.periods?.lastOrNull()?.let {
+                lastHomeLineup =
+                    if (it is Substitution && it.teamClass == HOME) it.homeLineup.after(it)
+                    else it.homeLineup
+                lastVisitorLineup =
+                    if (it is Substitution && it.teamClass == VISITOR) it.visitorLineup.after(it)
+                    else it.visitorLineup
+            }
+        }
     }
 
     fun undo(): Period? {

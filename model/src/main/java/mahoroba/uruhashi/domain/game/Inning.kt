@@ -136,13 +136,17 @@ class Inning(
         plateAppearances.subList(startIndex, plateAppearances.size).forEach {
             it.replaceFirstPeriodLineup(lastHomeLineup, lastVisitorLineup)
 
-            it.periods.lastOrNull()?.let {
+            it.periods.lastOrNull()?.let { lastPeriod ->
                 lastHomeLineup =
-                    if (it is Substitution && it.teamClass == HOME) it.homeLineup.after(it)
-                    else it.homeLineup
+                    if (lastPeriod is Substitution && lastPeriod.teamClass == HOME)
+                        lastPeriod.homeLineup.after(lastPeriod)
+                    else
+                        lastPeriod.homeLineup
                 lastVisitorLineup =
-                    if (it is Substitution && it.teamClass == VISITOR) it.visitorLineup.after(it)
-                    else it.visitorLineup
+                    if (lastPeriod is Substitution && lastPeriod.teamClass == VISITOR)
+                        lastPeriod.visitorLineup.after(lastPeriod)
+                    else
+                        lastPeriod.visitorLineup
             }
         }
     }
