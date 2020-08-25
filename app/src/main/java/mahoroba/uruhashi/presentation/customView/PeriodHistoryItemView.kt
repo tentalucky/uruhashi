@@ -254,7 +254,6 @@ class PeriodHistoryItemView(context: Context, attrs: AttributeSet?, defStyleAttr
             }
             canvas.save()
             canvas.translate(x, y)
-            canvas.scale(strikeZoneWidth * 0.225f, strikeZoneWidth * 0.225f)
             if (isLHP) canvas.scale(-1f, 1f)
             canvas.drawPath(path, paint)
             canvas.restore()

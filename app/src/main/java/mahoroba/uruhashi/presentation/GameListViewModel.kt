@@ -33,8 +33,8 @@ class GameListViewModel(application: Application) : BaseViewModel(application) {
 
     private val PERMISSION_REQUEST_EXPORT_GAME = 1000
 
-    val gameSummaryList: LiveData<List<GameSummaryDto>>
-        get() = useCase.gameSummaryList
+    val gameSummaryList: LiveData<List<GameSummaryDto>> =
+        Transformations.map(useCase.gameSummaryList) { it.sortedByDescending { t -> t.gameDate } }
 
     private val mSelectedGame = MutableLiveData<Game>()
     val isSelected: LiveData<Boolean> = Transformations.map(mSelectedGame) { it != null }

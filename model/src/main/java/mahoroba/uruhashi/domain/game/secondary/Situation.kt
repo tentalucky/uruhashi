@@ -82,11 +82,13 @@ class Situation(
         val newBalls = when {
             play is Pitch && play.settled -> 0
             play is Ball -> balls + 1
+            play is NoPitchIntentionalWalk -> 0
             else -> balls
         }
         val newStrikes = when {
             play is Pitch && play.settled -> 0
             play is Strike || play is Foul && strikes < 2 -> strikes + 1
+            play is NoPitchIntentionalWalk -> 0
             else -> strikes
         }
 
