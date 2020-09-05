@@ -447,9 +447,9 @@ class ScoreBoardView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
                 )
 
                 workPaint.textSize = height * 0.015f
-                workPaint.color = Color.WHITE
                 gameState?.visitorTeamLineup?.getPlayer(i)?.let { player ->
                     battingStats?.getBattingResultsOf(player)?.forEachIndexed { idx, stat ->
+                        workPaint.color = getBattingResultColor(stat)
                         canvas.drawTextWithinArea(
                             getBattingResultString(stat),
                             width * 0.005f + resultWidth * idx,
@@ -462,6 +462,7 @@ class ScoreBoardView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
                 }
                 gameState?.homeTeamLineup?.getPlayer(i)?.let { player ->
                     battingStats?.getBattingResultsOf(player)?.forEachIndexed { idx, stat ->
+                        workPaint.color = getBattingResultColor(stat)
                         canvas.drawTextWithinArea(
                             getBattingResultString(stat),
                             width * 0.525f + resultWidth * idx,
@@ -564,7 +565,7 @@ class ScoreBoardView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             drawBox(
                 width * 0.005f, height * 0.865f, width * 0.1225f, height * 0.905f,
                 0f, 0f, width * 0.01f,
-               Color.TRANSPARENT, Color.WHITE,
+                Color.TRANSPARENT, Color.WHITE,
                 when (teamClass) {
                     TeamClass.HOME -> (walksHome + hitsByPitchHome).toString()
                     TeamClass.VISITOR -> (walksVisitor + hitsByPitchVisitor).toString()
@@ -607,9 +608,18 @@ class ScoreBoardView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
         // endregion ### Draw summary ###
     }
 
+    private fun getBattingResultColor(stat: GamePlayerBattingStatsDto.BattingStat): Int {
+        return when (stat.result) {
+            SINGLE, DOUBLE, TRIPLE -> Color.YELLOW
+            HOME_RUN -> Color.rgb(255, 128, 224)
+            WALK, HIT_BY_PITCH, INTENTIONAL_WALK -> Color.CYAN
+            else -> Color.WHITE
+        }
+    }
+
     private fun getBattingResultString(stat: GamePlayerBattingStatsDto.BattingStat): String {
         // TODO: make resource
-        val pos = when (stat.fieldersPosition) {
+        val pos = when (stat.takingErrorPosition ?: stat.fieldersPosition) {
             PITCHER -> "投"
             CATCHER -> "捕"
             FIRST_BASEMAN -> "一"
@@ -621,6 +631,8 @@ class ScoreBoardView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
             RIGHT_FIELDER -> "右"
             null -> ""
         }
+
+        if (stat.takingErrorPosition != null) return pos + "失"
 
         return when (stat.result) {
             SINGLE -> "安打"

@@ -8,7 +8,8 @@ import mahoroba.uruhashi.domain.game.secondary.Lineup
 class GamePlayerBattingStatsDto(boxScore: BoxScore) {
     data class BattingStat(
         val result: BattingResult,
-        val fieldersPosition: FieldPosition?
+        val fieldersPosition: FieldPosition?,
+        val takingErrorPosition: FieldPosition?
     )
 
     private val battingResults = mutableMapOf<Player, ArrayList<BattingStat>>()
@@ -43,6 +44,11 @@ class GamePlayerBattingStatsDto(boxScore: BoxScore) {
                                         prd.fieldActiveDuration
                                             .fieldPlayList.firstOrNull()
                                             ?.fieldersActionList?.firstOrNull()
+                                            ?.position,
+                                        prd.fieldActiveDuration
+                                            .fieldPlayList.firstOrNull()
+                                            ?.fieldersActionList
+                                            ?.firstOrNull { a -> a.record?.isError == true }
                                             ?.position
                                     )
                                 )
