@@ -70,6 +70,8 @@ class PitchInputViewModel(
     val outs: LiveData<String> =
         Transformations.map(playInputSuite.gameState) { it.outs.toString() }
 
+    val gameState = playInputSuite.gameState
+    val gameBaseInfo = playInputSuite.gameBaseInfo
     val homeTeamAbbreviatedName: LiveData<String> =
         Transformations.map(playInputSuite.gameBaseInfo) { it.homeTeamAbbreviatedName }
     val visitorTeamAbbreviatedName: LiveData<String> =

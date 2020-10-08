@@ -12,209 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/informationBackGround"
+        <mahoroba.uruhashi.presentation.customView.GameInfoHeaderView
+            android:id="@+id/gameInfoHeaderView"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="#FF208020"
-            app:layout_constraintTop_toTopOf="parent"
+            app:gameState="@{vm.gameState}"
+            app:gameBaseInfo="@{vm.gameBaseInfo}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/buttonOption"
-            />
-
-        <mahoroba.uruhashi.presentation.customView.OutlineTextView
-            android:id="@+id/textInning"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FF1040C0"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            android:text="@{vm.inningText}"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/runnersStateView"
-            app:layout_constraintEnd_toEndOf="@id/runnersStateView"
-            tools:ignore="SmallSp" />
-
-        <mahoroba.uruhashi.presentation.customView.RunnersStateView
-            android:id="@+id/runnersStateView"
-            android:layout_width="48dp"
-            android:layout_height="36dp"
-            app:situation="@{vm.situation}"
-            app:layout_constraintTop_toBottomOf="@id/textInning"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <mahoroba.uruhashi.presentation.customView.OutlineTextView
-            android:id="@+id/textBallCaption"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            android:textColor="#FF1040C0"
-            android:text="@string/caption_ball"
-            app:layout_constraintTop_toTopOf="@id/textInning"
-            app:layout_constraintBottom_toTopOf="@id/textStrikeCaption"
-            app:layout_constraintStart_toEndOf="@id/runnersStateView"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/textBall"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#FFFFFFFF"
-            android:text="@{vm.balls}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textBallCaption"
-            app:layout_constraintStart_toEndOf="@id/textBallCaption"
-            tools:ignore="SmallSp" />
-
-        <mahoroba.uruhashi.presentation.customView.OutlineTextView
-            android:id="@+id/textStrikeCaption"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            android:textColor="#FF1040C0"
-            android:text="@string/caption_strike"
-            app:layout_constraintTop_toBottomOf="@id/textBallCaption"
-            app:layout_constraintBottom_toTopOf="@id/textOutCaption"
-            app:layout_constraintStart_toEndOf="@id/runnersStateView"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/textStrikes"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#FFFFFFFF"
-            android:text="@{vm.strikes}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textStrikeCaption"
-            app:layout_constraintStart_toEndOf="@id/textStrikeCaption"
-            tools:ignore="SmallSp" />
-
-        <mahoroba.uruhashi.presentation.customView.OutlineTextView
-            android:id="@+id/textOutCaption"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            android:textColor="#FF1040C0"
-            android:text="@string/caption_out"
-            app:layout_constraintTop_toBottomOf="@id/textStrikeCaption"
-            app:layout_constraintBottom_toBottomOf="@id/runnersStateView"
-            app:layout_constraintStart_toEndOf="@id/runnersStateView"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/textOuts"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="#FFFFFFFF"
-            android:text="@{vm.outs}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textOutCaption"
-            app:layout_constraintStart_toEndOf="@id/textOutCaption"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/textVisitorTeamName"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.visitorTeamAbbreviatedName}"
-            android:hint="@string/hint_visitor_team"
-            app:layout_constraintTop_toTopOf="@id/textInning"
-            app:layout_constraintBottom_toTopOf="@id/textHomeTeamName"
-            app:layout_constraintStart_toEndOf="@id/textBall"
-            />
-
-        <TextView
-            android:id="@+id/textRunsOfVisitor"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.runsOfVisitor}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textVisitorTeamName"
-            app:layout_constraintStart_toEndOf="@id/textVisitorTeamName"
-            />
-
-        <TextView
-            android:id="@+id/textHomeTeamName"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.homeTeamAbbreviatedName}"
-            android:hint="@string/hint_home_team"
-            app:layout_constraintTop_toBottomOf="@id/textVisitorTeamName"
-            app:layout_constraintBottom_toBottomOf="@id/runnersStateView"
-            app:layout_constraintStart_toStartOf="@id/textVisitorTeamName"
-            />
-
-        <TextView
-            android:id="@+id/textRunsOfHome"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.runsOfHome}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textHomeTeamName"
-            app:layout_constraintStart_toEndOf="@id/textHomeTeamName"
-            />
-
-        <TextView
-            android:id="@+id/textPlayerNameOfVisitor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.playerNameOfVisitor}"
-            android:hint="---"
-            app:layout_constraintBaseline_toBaselineOf="@id/textVisitorTeamName"
-            app:layout_constraintStart_toEndOf="@id/textRunsOfVisitor"
-            app:layout_constraintEnd_toStartOf="@id/textPlayerInfoOfVisitor"
-            />
-
-        <TextView
-            android:id="@+id/textPlayerNameOfHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.playerNameOfHome}"
-            android:hint="---"
-            app:layout_constraintBaseline_toBaselineOf="@id/textHomeTeamName"
-            app:layout_constraintStart_toEndOf="@id/textRunsOfHome"
-            app:layout_constraintEnd_toStartOf="@id/textPlayerInfoOfHome"
-            />
-
-        <TextView
-            android:id="@+id/textPlayerInfoOfVisitor"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.playerInfoOfVisitor}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textPlayerNameOfVisitor"
-            app:layout_constraintEnd_toEndOf="@id/informationBackGround"
-            />
-
-        <TextView
-            android:id="@+id/textPlayerInfoOfHome"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:textColor="#FFFFFFFF"
-            android:textSize="12sp"
-            android:text="@{vm.playerInfoOfHome}"
-            app:layout_constraintBaseline_toBaselineOf="@id/textPlayerNameOfHome"
-            app:layout_constraintEnd_toEndOf="@id/informationBackGround"
             />
 
         <android.support.v7.widget.AppCompatImageButton
@@ -223,8 +29,8 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_menu_black_24dp"
             android:onClick="@{vm::optionCommand}"
-            app:layout_constraintTop_toTopOf="@id/informationBackGround"
-            app:layout_constraintBottom_toBottomOf="@id/informationBackGround"
+            app:layout_constraintTop_toTopOf="@id/gameInfoHeaderView"
+            app:layout_constraintBottom_toBottomOf="@id/gameInfoHeaderView"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
@@ -236,7 +42,7 @@
             app:pitch_location_y="@={vm.pitchLocationY}"
             app:pitch_list="@{vm.pitchList}"
             app:is_LHP="@{vm.isLHD}"
-            app:layout_constraintTop_toBottomOf="@id/informationBackGround"
+            app:layout_constraintTop_toBottomOf="@id/gameInfoHeaderView"
             app:layout_constraintBottom_toTopOf="@id/pitchTypeView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/testCheckSwing"
