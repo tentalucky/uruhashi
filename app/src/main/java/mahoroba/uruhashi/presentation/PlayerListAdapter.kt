@@ -26,7 +26,7 @@ class PlayerListAdapter(context: Context, owner: LifecycleOwner, private val vie
         }
 
     init {
-        viewModel.playerSummaryList.observe(owner, Observer<List<PlayerManagementUseCase.PlayerSummary>> { t ->
+        viewModel.filteredPlayerList.observe(owner, Observer<List<PlayerManagementUseCase.PlayerSummary>> { t ->
             t?.let { players = it }
         })
     }

@@ -2,10 +2,7 @@ package mahoroba.uruhashi.presentation
 
 import android.app.Activity
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -26,17 +23,26 @@ class PlayerListViewModel(application: Application) : AndroidViewModel(applicati
         RepositoryPresenter.getTeamRepository(application)
     )
 
-    val playerSummaryList: LiveData<List<PlayerManagementUseCase.PlayerSummary>>
+
+    private val playerSummaryList: LiveData<List<PlayerManagementUseCase.PlayerSummary>>
         get() = useCase.playerSummaryList
+
+    val searchWord = MutableLiveData<String>()
+    val filteredPlayerList = MediatorLiveData<List<PlayerManagementUseCase.PlayerSummary>>()
 
     private val mSelectedPlayer = MutableLiveData<PlayerProfile>()
     val isSelected: LiveData<Boolean> = Transformations.map(mSelectedPlayer) { it != null }
     val selectedPlayerId: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.id?.value }
-    val selectedPlayerFullName: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.name?.fullName }
-    val selectedPlayerFamilyName: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.name?.familyName }
-    val selectedPlayerFirstName: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.name?.firstName }
-    val selectedPlayerBats: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.bats.toString() }
-    val selectedPlayerThrows: LiveData<String> = Transformations.map(mSelectedPlayer) { it?.throws.toString() }
+    val selectedPlayerFullName: LiveData<String> =
+        Transformations.map(mSelectedPlayer) { it?.name?.fullName }
+    val selectedPlayerFamilyName: LiveData<String> =
+        Transformations.map(mSelectedPlayer) { it?.name?.familyName }
+    val selectedPlayerFirstName: LiveData<String> =
+        Transformations.map(mSelectedPlayer) { it?.name?.firstName }
+    val selectedPlayerBats: LiveData<String> =
+        Transformations.map(mSelectedPlayer) { it?.bats.toString() }
+    val selectedPlayerThrows: LiveData<String> =
+        Transformations.map(mSelectedPlayer) { it?.throws.toString() }
 
     private val mSelectedPlayerBelonging = MutableLiveData<List<PlayerBelongingInfoDto>>()
     val selectedPlayerBelonging: LiveData<List<PlayerBelongingInfoDto>>
@@ -45,6 +51,25 @@ class PlayerListViewModel(application: Application) : AndroidViewModel(applicati
     val onSelected = LiveEvent<Unit>()
     val navigating = LiveEvent<ActivityNavigator>()
     val activityMethod = LiveEvent<(Activity) -> Unit>()
+
+    init {
+        filteredPlayerList.addSource(playerSummaryList) { updatePlayerList() }
+        filteredPlayerList.addSource(searchWord) { updatePlayerList() }
+    }
+
+    private fun updatePlayerList() {
+        thread {
+            filteredPlayerList.postValue(
+                if (searchWord.value.isNullOrEmpty()) {
+                    playerSummaryList.value
+                } else {
+                    playerSummaryList.value?.filter {
+                        it.fullName?.contains(searchWord.value!!, true) ?: true
+                    } ?: emptyList()
+                }
+            )
+        }
+    }
 
     fun selectCommand(playerId: ID) {
         thread {
@@ -101,7 +126,7 @@ class PlayerListViewModel(application: Application) : AndroidViewModel(applicati
             .setTitle("TITLE")
             .setMessage("MESSAGE")
             .setPositiveButton("No") { _, _ -> Unit }
-            .setNegativeButton("OK") { _, _ -> deleteCommandBody()}
+            .setNegativeButton("OK") { _, _ -> deleteCommandBody() }
             .show()
     }
 }
