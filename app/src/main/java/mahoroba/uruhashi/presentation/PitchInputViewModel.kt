@@ -41,10 +41,6 @@ class PitchInputViewModel(
         Transformations.map(playInputSuite.gameBaseInfo) { it.homeTeamAbbreviatedName }
     val visitorTeamAbbreviatedName: LiveData<String> =
         Transformations.map(playInputSuite.gameBaseInfo) { it.visitorTeamAbbreviatedName }
-    val runsOfHome: LiveData<String> =
-        Transformations.map(playInputSuite.gameState) { it.situation.runsOfHome.toString() }
-    val runsOfVisitor: LiveData<String> =
-        Transformations.map(playInputSuite.gameState) { it.situation.runsOfVisitor.toString() }
     val isLHD: LiveData<Boolean> =
         Transformations.map(playInputSuite.gameState) {
             it.currentPitchersThrowHandType == HandType.LEFT
