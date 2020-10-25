@@ -35,41 +35,6 @@ class PitchInputViewModel(
 
     val situation = Transformations.map(playInputSuite.gameState) { it.situation }!!
 
-    val inningText: LiveData<String> = Transformations.map(playInputSuite.gameState) {
-        ((it.situation.inningNumber + 1) / 2).toString() + "回" + if (it.situation.inningNumber % 2 == 1) "表" else "裏"
-    }
-    val playerNameOfHome: LiveData<String?> = Transformations.map(playInputSuite.gameState) {
-        when (it.situation.topOrBottom) {
-            TOP -> it.currentPitcherName?.fullName
-            BOTTOM -> it.currentBatterName?.fullName
-        }
-    }
-    val playerNameOfVisitor: LiveData<String?> = Transformations.map(playInputSuite.gameState) {
-        when (it.situation.topOrBottom) {
-            TOP -> it.currentBatterName?.fullName
-            BOTTOM -> it.currentPitcherName?.fullName
-        }
-    }
-    val playerInfoOfHome: LiveData<String?> = Transformations.map(playInputSuite.gameState) {
-        when (it.situation.topOrBottom) {
-            TOP -> it.currentPitchersPitchCount.toString() + "球"
-            BOTTOM -> null
-        }
-    }
-    val playerInfoOfVisitor: LiveData<String?> = Transformations.map(playInputSuite.gameState) {
-        when (it.situation.topOrBottom) {
-            TOP -> null
-            BOTTOM -> it.currentPitchersPitchCount.toString() + "球"
-        }
-    }
-
-    val balls: LiveData<String> =
-        Transformations.map(playInputSuite.gameState) { it.balls.toString() }
-    val strikes: LiveData<String> =
-        Transformations.map(playInputSuite.gameState) { it.strikes.toString() }
-    val outs: LiveData<String> =
-        Transformations.map(playInputSuite.gameState) { it.outs.toString() }
-
     val gameState = playInputSuite.gameState
     val gameBaseInfo = playInputSuite.gameBaseInfo
     val homeTeamAbbreviatedName: LiveData<String> =
