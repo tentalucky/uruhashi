@@ -30,7 +30,7 @@ class PeriodHistoryListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val parentViewModel = ViewModelProviders.of(activity!!).get(ScoreKeepingViewModel::class.java)
-        mViewModel = parentViewModel.playInputViewModel.periodHistoryListViewModel
+        mViewModel = parentViewModel.periodHistoryListViewModel
 
         val binding = FragmentPeriodHistoryListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this

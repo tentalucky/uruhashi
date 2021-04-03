@@ -33,6 +33,7 @@ class ScoreKeepingActivity : BaseActivity() {
         when (type) {
             ScoreKeepingViewModel.ActiveFragmentType.GAME_INFO_INPUT -> GameInfoInputFragment.newInstance()
             ScoreKeepingViewModel.ActiveFragmentType.BOX_SCORE_INPUT -> PlayInputFragment.newInstance()
+            ScoreKeepingViewModel.ActiveFragmentType.GAME_ENDING -> GameEndingFragment.newInstance()
         }.let { t ->
             supportFragmentManager.beginTransaction()
                 .replace(R.id.content, t)

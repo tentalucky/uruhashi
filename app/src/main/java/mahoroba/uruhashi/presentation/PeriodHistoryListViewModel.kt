@@ -6,6 +6,7 @@ import android.arch.lifecycle.Transformations
 import android.util.Log
 import android.view.View
 import mahoroba.uruhashi.common.LiveEvent
+import mahoroba.uruhashi.domain.game.GameStatus
 import mahoroba.uruhashi.presentation.base.BaseViewModel
 import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
@@ -13,13 +14,13 @@ class PeriodHistoryListViewModel(
     application: Application,
     val gameBaseInfo: LiveData<ScoreKeepingUseCase.GameBaseInfo>,
     val boxScore: LiveData<ScoreKeepingUseCase.BoxScoreDto>,
-    val parentViewModel: PlayInputViewModel
+    val parentViewModel: ScoreKeepingViewModel
 ) : BaseViewModel(application) {
 
     class PeriodHistoryListItemViewModel(
         val gameBaseInfo: ScoreKeepingUseCase.GameBaseInfo,
         val period: ScoreKeepingUseCase.PeriodDto,
-        val parentViewModel: PlayInputViewModel
+        val parentViewModel: ScoreKeepingViewModel
     ) {
         val requireShowPopupMenu = LiveEvent<Unit>()
 
@@ -30,27 +31,27 @@ class PeriodHistoryListViewModel(
 
         fun modifyThisPlay() {
             if (period is ScoreKeepingUseCase.PlayDto) {
-                parentViewModel.openModifyPlay(period)
+                parentViewModel.onModifyingPlayRequired(period)
             }
         }
 
         fun insertOffenceSubstitution() {
-            parentViewModel.openInsertOffenceSubstitution(period)
+            parentViewModel.onInsertingOffenceSubstitutionRequired(period)
         }
 
         fun insertDefenceSubstitution() {
-            parentViewModel.openInsertDefenceSubstitution(period)
+            parentViewModel.onInsertingDefenseSubstitutionRequired(period)
         }
 
         fun modifyThisSubstitution() {
             if (period is ScoreKeepingUseCase.SubstitutionDto) {
-                parentViewModel.openModifySubstitution(period)
+                parentViewModel.onModifyingSubstitutionRequired(period)
             }
         }
 
         fun deleteThisSubstitution() {
             if (period is ScoreKeepingUseCase.SubstitutionDto) {
-                parentViewModel.openDeleteSubstitution(period)
+                parentViewModel.onDeletingSubstitutionRequired(period)
             }
         }
     }

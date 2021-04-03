@@ -113,6 +113,9 @@ class ScoreKeepingUseCase(
             }
         }
 
+    val gameStatus : GameStatus
+        get() = game.value!!.boxScore.gameStatus
+
     // endregion
 
     init {
@@ -1102,6 +1105,26 @@ class ScoreKeepingUseCase(
             pitch.battingOption,
             pitch.settled
         )
+    }
+
+    fun finishGameAsCompleted() {
+        game.value!!.boxScore.finishGameAsCompleted()
+        game.value = game.value
+    }
+
+    fun finishGameAsCalled() {
+        game.value!!.boxScore.finishGameAsCalled()
+        game.value = game.value
+    }
+
+    fun suspendGame() {
+        game.value!!.boxScore.suspendGame()
+        game.value = game.value
+    }
+
+    fun cancelGameFinishing() {
+        game.value!!.boxScore.cancelGameFinishing()
+        game.value = game.value
     }
 
     // region * DTO *

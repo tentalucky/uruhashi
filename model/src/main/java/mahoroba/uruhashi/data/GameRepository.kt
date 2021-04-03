@@ -264,7 +264,8 @@ class GameRepository(application: Application) : IGameRepository {
     }
 
     override fun get(gameId: ID): Game {
-        val game = gameDao.findById(gameId.value).toGame()
+//        val game = gameDao.findById(gameId.value).toGame()
+        val gameData = gameDao.findById(gameId.value)
         val homeMemberDataList = startingMemberDao.findMembers(gameId, TeamClass.HOME)
         val visitorMemberDataList = startingMemberDao.findMembers(gameId, TeamClass.VISITOR)
         val inningDataList = inningDao.findByGameId(gameId)
@@ -278,6 +279,24 @@ class GameRepository(application: Application) : IGameRepository {
         val fieldPlayDataList = fieldPlayDao.findByGameId(gameId)
         val fieldersActionDataList = fieldersActionDao.findByGameId(gameId)
         val runnersActionDataList = runnersActionDao.findByGameId(gameId)
+
+        val game = Game(gameId)
+        game.gameInfo.let {
+            it.gameName = gameData.gameName
+            it.date = gameData.date
+            it.homeTeam.teamId =
+                if (gameData.homeTeamId != null) ID(gameData.homeTeamId!!) else null
+            it.homeTeam.teamName = gameData.homeTeamName
+            it.homeTeam.abbreviatedName = gameData.homeTeamAbbreviatedName
+            it.visitorTeam.teamId =
+                if (gameData.visitorTeamId != null) ID(gameData.visitorTeamId!!) else null
+            it.visitorTeam.teamName = gameData.visitorTeamName
+            it.visitorTeam.abbreviatedName = gameData.visitorTeamAbbreviatedName
+            it.stadiumInfo.stadiumId =
+                if (gameData.stadiumId != null) ID(gameData.stadiumId!!) else null
+            it.stadiumInfo.stadiumName = gameData.stadiumName
+            it.stadiumInfo.abbreviatedName = gameData.stadiumAbbreviatedName
+        }
 
         val setStartingLineup =
             fun(lineup: StartingLineup, dataList: List<StartingMemberData>) {
@@ -580,6 +599,14 @@ class GameRepository(application: Application) : IGameRepository {
                             game.boxScore.addNewPeriod(period)
                         }
                 }
+        }
+
+        when (gameData.gameStatus) {
+            GameStatus.GAME_SET -> game.boxScore.finishGameAsCompleted()
+            GameStatus.CALLED -> game.boxScore.finishGameAsCalled()
+            GameStatus.SUSPENDED -> game.boxScore.suspendGame()
+            else -> {
+            }
         }
 
         Log.d("AAA", "*** INNING ***")

@@ -8,7 +8,6 @@ import mahoroba.uruhashi.domain.game.TeamClass.HOME
 import mahoroba.uruhashi.domain.game.TeamClass.VISITOR
 import mahoroba.uruhashi.domain.game.TopOrBottom.BOTTOM
 import mahoroba.uruhashi.domain.game.TopOrBottom.TOP
-import mahoroba.uruhashi.presentation.PlayInputViewModel.ActiveFragmentType.*
 import mahoroba.uruhashi.presentation.base.BaseFragment
 import mahoroba.uruhashi.presentation.base.BaseViewModel
 import mahoroba.uruhashi.presentation.base.ScreenSuite
@@ -38,8 +37,6 @@ class PlayInputViewModel(
         DEFENCE_SUBSTITUTION,
         EASY_REFERENCE
     }
-
-    private val transitionStack = Stack<ActiveFragmentType>()
 
     private val mActiveFragmentType = MutableLiveData<ActiveFragmentType>()
     val activeFragmentType: LiveData<ActiveFragmentType> = mActiveFragmentType
@@ -82,21 +79,6 @@ class PlayInputViewModel(
                 ?: throw RuntimeException("DefenseSubstitutionInput is not available now.")
         }
 
-    val scoreBoardViewModel = ScoreBoardViewModel(
-        getApplication(),
-        useCase.gameBaseInfo,
-        useCase.latestGameState,
-        useCase.boxScore,
-        useCase.playersBattingStats
-    )
-
-    val periodHistoryListViewModel = PeriodHistoryListViewModel(
-        getApplication(),
-        useCase.gameBaseInfo,
-        useCase.boxScore,
-        this
-    )
-
     // endregion
 
     val gameBaseInfo = useCase.gameBaseInfo
@@ -133,6 +115,10 @@ class PlayInputViewModel(
 
     fun openGameInfoInput() {
         parentViewModel.switchToGameInfoInputFragment()
+    }
+
+    fun finishGameAsCompleted() {
+        parentViewModel.finishGameAsCompleted()
     }
 
     fun openModifyPlay(targetPlay: PlayDto?) {
@@ -281,12 +267,10 @@ class PlayInputViewModel(
 
     private fun newEasyReferenceSuite(): EasyReferenceSuite {
         return EasyReferenceSuite(
-            this,
-            useCase,
             this::suiteCompleted,
             this::suiteCanceled,
             this::changeFragment,
-            scoreBoardViewModel
+            parentViewModel.scoreBoardViewModel
         )
     }
 

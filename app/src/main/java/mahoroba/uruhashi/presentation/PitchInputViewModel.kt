@@ -100,6 +100,7 @@ class PitchInputViewModel(
             R.id.defenceTeamSubstitution -> playInputSuite.openDefenceSubstitution()
             R.id.easyReference -> playInputSuite.openEasyReferenceView()
             R.id.inputGameInfo -> playInputSuite.openGameInfoInputView()
+            R.id.finishGameAsCompleted -> playInputSuite.finishGameAsComplete()
             R.id.saveGame -> playInputSuite.saveGame()
         }
     }

@@ -11,6 +11,7 @@ import android.widget.Toast
 import kotlinx.coroutines.*
 import mahoroba.uruhashi.di.RepositoryPresenter
 import mahoroba.uruhashi.domain.ID
+import mahoroba.uruhashi.domain.game.GameStatus
 import mahoroba.uruhashi.domain.game.Position
 import mahoroba.uruhashi.domain.game.TeamClass
 import mahoroba.uruhashi.presentation.base.BaseViewModel
@@ -39,7 +40,8 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
 
     enum class ActiveFragmentType {
         GAME_INFO_INPUT,
-        BOX_SCORE_INPUT
+        BOX_SCORE_INPUT,
+        GAME_ENDING
     }
 
     private val mActiveFragmentType = MutableLiveData<ActiveFragmentType>()
@@ -60,6 +62,41 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
                 mPlayKeepingViewModel = PlayInputViewModel(myApplication, this, useCase)
             }
             return mPlayKeepingViewModel!!
+        }
+
+    private var mGameEndingViewModel: GameEndingViewModel? = null
+    val gameEndingViewModel: GameEndingViewModel
+        get() {
+            if (mGameEndingViewModel == null) {
+                mGameEndingViewModel = GameEndingViewModel(myApplication, this, useCase)
+            }
+            return mGameEndingViewModel!!
+        }
+
+    private var mScoreBoardViewModel: ScoreBoardViewModel? = null
+    val scoreBoardViewModel: ScoreBoardViewModel
+        get() {
+            if (mScoreBoardViewModel == null) {
+                mScoreBoardViewModel = ScoreBoardViewModel(
+                    myApplication,
+                    useCase.gameBaseInfo,
+                    useCase.latestGameState,
+                    useCase.boxScore,
+                    useCase.playersBattingStats
+                )
+            }
+            return mScoreBoardViewModel!!
+        }
+
+    private var mPeriodHistoryListViewModel: PeriodHistoryListViewModel? = null
+    val periodHistoryListViewModel: PeriodHistoryListViewModel
+        get() {
+            if (mPeriodHistoryListViewModel == null) {
+                mPeriodHistoryListViewModel = PeriodHistoryListViewModel(
+                    myApplication, useCase.gameBaseInfo, useCase.boxScore, this
+                )
+            }
+            return mPeriodHistoryListViewModel!!
         }
 
     // region * Properties *
@@ -93,13 +130,56 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
         }
     }
 
-    fun switchToBoxScoreInputFragment() {
-        setGameInfo()
+    fun switchToGameInfoInputFragment() {
+        mActiveFragmentType.value = ActiveFragmentType.GAME_INFO_INPUT
+    }
+
+    fun finishGameAsCompleted() {
+        useCase.finishGameAsCompleted()
+        switchToGameEndingFragment()
+    }
+
+    fun cancelGameFinishing() {
+        useCase.cancelGameFinishing()
+        switchToBoxScoreInputFragment()
+    }
+
+    fun onModifyingPlayRequired(playDto: ScoreKeepingUseCase.PlayDto) {
+        if (activeFragmentType.value == ActiveFragmentType.BOX_SCORE_INPUT) {
+            mPlayKeepingViewModel?.openModifyPlay(playDto)
+        }
+    }
+
+    fun onInsertingOffenceSubstitutionRequired(periodDto: ScoreKeepingUseCase.PeriodDto) {
+        if (activeFragmentType.value == ActiveFragmentType.BOX_SCORE_INPUT) {
+            mPlayKeepingViewModel?.openInsertOffenceSubstitution(periodDto)
+        }
+    }
+
+    fun onInsertingDefenseSubstitutionRequired(periodDto: ScoreKeepingUseCase.PeriodDto) {
+        if (activeFragmentType.value == ActiveFragmentType.BOX_SCORE_INPUT) {
+            mPlayKeepingViewModel?.openInsertDefenceSubstitution(periodDto)
+        }
+    }
+
+    fun onModifyingSubstitutionRequired(substitutionDto: ScoreKeepingUseCase.SubstitutionDto) {
+        if (activeFragmentType.value == ActiveFragmentType.BOX_SCORE_INPUT) {
+            mPlayKeepingViewModel?.openModifySubstitution(substitutionDto)
+        }
+    }
+
+    fun onDeletingSubstitutionRequired(substitutionDto: ScoreKeepingUseCase.SubstitutionDto) {
+        if (activeFragmentType.value == ActiveFragmentType.BOX_SCORE_INPUT) {
+            mPlayKeepingViewModel?.openDeleteSubstitution(substitutionDto)
+        }
+    }
+
+    private fun switchToBoxScoreInputFragment() {
         mActiveFragmentType.value = ActiveFragmentType.BOX_SCORE_INPUT
     }
 
-    fun switchToGameInfoInputFragment() {
-        mActiveFragmentType.value = ActiveFragmentType.GAME_INFO_INPUT
+    private fun switchToGameEndingFragment() {
+        mActiveFragmentType.value = ActiveFragmentType.GAME_ENDING
     }
 
     fun commitGameInfo(v: View?) {
@@ -107,8 +187,12 @@ class ScoreKeepingViewModel(application: Application, gameId: ID?) :
     }
 
     fun completeInputGameInfo(v: View?) {
-//        setGameInfo()
-        switchToBoxScoreInputFragment()
+        setGameInfo()
+        if (useCase.gameStatus == GameStatus.PLAYING) {
+            switchToBoxScoreInputFragment()
+        } else {
+            switchToGameEndingFragment()
+        }
     }
 
     private fun setGameInfo() {

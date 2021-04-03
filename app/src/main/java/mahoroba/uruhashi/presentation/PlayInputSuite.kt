@@ -125,6 +125,10 @@ class PlayInputSuite(
         parentViewModel.openGameInfoInput()
     }
 
+    fun finishGameAsComplete() {
+        parentViewModel.finishGameAsCompleted()
+    }
+
     fun settlePitchInput() {
         pitchInputViewModel.let {
             when (it.selectedPitchResult.value) {

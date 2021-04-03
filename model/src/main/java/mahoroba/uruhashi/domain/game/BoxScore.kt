@@ -8,7 +8,7 @@ class BoxScore {
     val homeStartingLineup = StartingLineup(this::onStartingPositionChanged)
     val visitorStartingLineup = StartingLineup(this::onStartingPositionChanged)
 
-    var gameStatus: GameStatus? = null
+    var gameStatus: GameStatus
         private set
 
     private val mInnings = ArrayList<Inning>()
@@ -16,6 +16,7 @@ class BoxScore {
         get() = mInnings
 
     init {
+        gameStatus = GameStatus.PLAYING
         mInnings.add(Inning(1, -1, this::onInningCompleted, this::onSubstitutionInsertedIntoInning))
     }
 
@@ -85,6 +86,9 @@ class BoxScore {
     }
 
     fun undo(): Period? {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         var period: Period?
         do {
             period = mInnings.last().popLastPeriod()
@@ -206,10 +210,16 @@ class BoxScore {
     }
 
     fun addNewPeriod(period: Period) {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         innings.last().plateAppearances.last().addPeriod(period)
     }
 
     fun insertSubstitution(substitution: Substitution, anchorPeriod: Period) {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         var targetPlateAppearance: PlateAppearance? = null
         innings.forEach findTargetPlateAppearance@{ inn ->
             inn.plateAppearances.forEach { pa ->
@@ -224,6 +234,9 @@ class BoxScore {
     }
 
     fun replaceSubstitution(newSubstitution: Substitution, oldSubstitution: Substitution) {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         var targetPlateAppearance: PlateAppearance? = null
         innings.forEach findTargetPlateAppearance@{ inn ->
             inn.plateAppearances.forEach { pa ->
@@ -238,6 +251,9 @@ class BoxScore {
     }
 
     fun deleteSubstitution(substitution: Substitution) {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         var targetPlateAppearance: PlateAppearance? = null
         innings.forEach findTargetPlateAppearance@{ inn ->
             inn.plateAppearances.forEach { pa ->
@@ -275,6 +291,9 @@ class BoxScore {
     }
 
     fun replacePlay(newPlay: Play, oldPlay: Play) {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished.")
+
         if (!canReplacePlay(oldPlay, newPlay))
             throw RuntimeException("This replacing is not allowed. Check it with 'canReplacePlay' method before.")
 
@@ -289,5 +308,33 @@ class BoxScore {
         }
 
         targetPlateAppearance?.replacePlay(newPlay, oldPlay)
+    }
+
+    fun finishGameAsCompleted() {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished already.")
+
+        gameStatus = GameStatus.GAME_SET
+    }
+
+    fun finishGameAsCalled() {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished already.")
+
+        gameStatus = GameStatus.CALLED
+    }
+
+    fun suspendGame() {
+        if (gameStatus != GameStatus.PLAYING)
+            throw IllegalStateException("This game has finished already.")
+
+        gameStatus = GameStatus.SUSPENDED
+    }
+
+    fun cancelGameFinishing() {
+        if (gameStatus == GameStatus.PLAYING)
+            throw IllegalStateException("This game has not finished.")
+
+        gameStatus = GameStatus.PLAYING
     }
 }

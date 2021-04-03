@@ -5,8 +5,6 @@ import mahoroba.uruhashi.presentation.base.ScreenSuite
 import mahoroba.uruhashi.usecase.scoreKeeping.ScoreKeepingUseCase
 
 class EasyReferenceSuite(
-    private val parentViewModel: PlayInputViewModel,
-    private val useCase: ScoreKeepingUseCase,
     onCompleteListener: () -> Unit,
     onCancelListener: () -> Unit,
     activeFragmentSetter: (ActiveFragmentType, ScreenSuite) -> Unit,
